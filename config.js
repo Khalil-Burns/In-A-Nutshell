@@ -13,7 +13,8 @@ const {
     AUTH_DOMAIN, 
     PROJECT_ID, 
     STORAGE_BUCKET, 
-    MESSAGING_SENDER_ID
+    MESSAGING_SENDER_ID,
+    APP_ID
 } = process.env; //creates and sets these variables to the stuff we made in .env
 
 assert(PORT, 'PORT is required');

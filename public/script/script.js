@@ -15,8 +15,9 @@ underlineButton.addEventListener("click", function(){
   // Toggle the bold class on the text element
   askFieldInput.classList.toggle("underline");
 });*/
+
 function go() {
-    var question =      tinymce.get('questionField').getContent();
-    tinymce.get('questionField').setContent('');
-    console.log(question);
+  var question = tinymce.get('questionField').getContent();
+  tinymce.get('questionField').setContent('');
+  console.log(question);
 }
