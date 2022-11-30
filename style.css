@@ -65,7 +65,7 @@ textarea {
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
-    margin-top: 7px;
+    margin-top: 0px;
     border-radius: 10px;
     height: 200px;
     width: 67%;
