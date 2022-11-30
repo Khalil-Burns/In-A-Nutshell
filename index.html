@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width">
   <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tiny.cloud/1/l8zjrawn1dbffyt6rbg04a479f4n9h183yx86efcd3lvugqk/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 
 <body>
@@ -21,20 +22,38 @@
         </select>
     </div>
     <div class="askField">
-        <textarea type="text" class="askFieldInput" id="askFieldInput"></textarea>
+        <!--<textarea type="text" class="askFieldInput" id="askFieldInput"></textarea>
         <br>
         <button id="B">B</button>
         <button id="I">I</button>
         <button id="U">U</button>
         <select name="cars" id="cars">
             <option> <div id="test">testin</div></option>
+            <option> <div id="test">testin</div></option>
+            <option> <div id="test">testin</div></option>
         </select>
-        <button><img class=""></img></button>
+        <input type="file" id="upload" hidden/>
+        <label for="upload">Choose file</label>
         <button>Clear</button>
         <button>words</button>
         <button>Post</button>
+      -->
+
+        <textarea id="questionField">
+        </textarea>
+        <script>
+        tinymce.init({
+          menubar: false,
+          selector: '#questionField',
+          //plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+          plugins: 'image link wordcount',
+          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | wordcount',
+        });
+        </script>
+        <input type="button" value="getText" onclick="go()"/>
     </div>
     <div class="notification"></div>
+    <div class="questionSort"></div>
     <div class="questions"></div>
     <script src="script.js"></script>
 </body>

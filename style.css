@@ -12,6 +12,9 @@ body {
     animation: gradient 15s ease infinite;
 }
 
+textarea {
+    resize: none;
+}
 
 .topBar {
     background: linear-gradient(-45deg, #568aa6, #4400ff, #4a7a96);
@@ -42,19 +45,30 @@ body {
     margin-right: 1%;
     margin-top: 10px;
     border-radius: 10px;
-    height: 150px;
-    width: 48.5%;
+    height: 300px;
+    width: 30%;
     float: right;
+}
+
+.questionSort {
+  background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff);
+    background-size: 400% 400%;
+    animation: gradient 5s ease infinite;
+    margin-left: 1%;
+    margin-top: 10px;
+    border-radius: 10px;
+    height: 30px;
+    width: 67%;
 }
 .questions {
     background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff);
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
-    margin-top: 10px;
+    margin-top: 7px;
     border-radius: 10px;
-    height: 150px;
-    width: 48.5%;
+    height: 200px;
+    width: 67%;
 }
 
 form {
@@ -92,6 +106,17 @@ button {
 }
 .underline {
     text-decoration: underline;
+}
+
+label{
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 7px;
+    margin-right: 7px;
+    height: calc(100% - 14px);
+    background-color: #ccc;
+    border: 2px solid #ccc;
+    border-radius: 4px;
 }
 
 @keyframes gradient {
