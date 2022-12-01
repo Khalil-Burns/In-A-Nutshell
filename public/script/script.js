@@ -34,14 +34,17 @@ underlineButton.addEventListener("click", function(){
 //   console.log(question);
 // }
 
-function go() {
-  var question = tinymce.get('questionField').getContent();
+function post() {
+  var question = document.getElementById("title").value;
+  var text = tinymce.get('questionField').getContent();
+  document.getElementById("title").value = '';
   var wordCnt = tinymce.activeEditor.plugins.wordcount.getCount();
   tinymce.get('questionField').setContent('');
 
   $.post("/",
   {
-    text: question,
+    question: question,
+    text: text,
     wordCnt: wordCnt
   });
 };

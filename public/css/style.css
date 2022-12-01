@@ -15,6 +15,23 @@ body {
 textarea {
     resize: none;
 }
+#title {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 70%;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+#postQuestion {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 19%;
+    float: right;
+}
 
 .topBar {
     background: linear-gradient(-45deg, #568aa6, #4400ff, #4a7a96);
@@ -43,7 +60,7 @@ textarea {
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-right: 1%;
-    margin-top: 10px;
+    margin-top: 20px;
     border-radius: 10px;
     height: 300px;
     width: 30%;
@@ -55,7 +72,8 @@ textarea {
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     border-radius: 10px;
     height: 30px;
     width: 67%;
@@ -65,13 +83,19 @@ textarea {
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
+    margin-right: 1%;
     margin-top: 0px;
     border-radius: 10px;
     height: 200px;
     width: 67%;
+    padding-top: 5px;
 }
 .question button {
     width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
+    text-align: left;
+    border-radius: 0px;
 }
 
 form {
@@ -99,6 +123,11 @@ button {
     height: calc(100% - 14px);
     border: 2px solid #ccc;
     border-radius: 4px;
+}
+
+.questionDisplay {
+    margin-left: 1%;
+    margin-top: 0px;
 }
 
 .bold {

@@ -22,6 +22,13 @@
           <option value="audi">Audi</option>
         </select>
     </div>
+    <div class="questionDisplay">
+        <h1><%- data.question %></h1>
+        <p><%- data.text %></p>
+    </div>
+    <div class="notification"></div>
+    <div class="questionSort"></div>
+    <div class="questions"></div>
     <div class="askField">
         <!--<textarea type="text" class="askFieldInput" id="askFieldInput"></textarea>
         <br>
@@ -50,22 +57,8 @@
           toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | wordcount',
         });
         </script>
-        <textarea id="title" rows="1"></textarea>
-        <input id="postQuestion" type="button" value="Ask!" onclick="post()"/>
-    </div>
-    <div class="notification"></div>
-    <div class="questionSort"></div>
-    <div class="questions">
-      <% for(var idx = 0; idx < questions.length; idx++) { %>
-        <div class="question">
-          <button>
-            <a href="/question/<%- questions[idx].id %>">
-              <p><%- questions[idx].text %></p>
-            </a>
-          </button>
-          <hr>
-        </div>
-      <% } %>
+        <input type="button" value="getText" onclick="reply()"/>
+        
     </div>
     <script src="/script/script.js"></script>
 </body>
