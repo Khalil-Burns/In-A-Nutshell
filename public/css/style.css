@@ -70,6 +70,9 @@ textarea {
     height: 200px;
     width: 67%;
 }
+.question button {
+    width: 98%;
+}
 
 form {
     height: 100%;

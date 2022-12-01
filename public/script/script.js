@@ -16,8 +16,32 @@ underlineButton.addEventListener("click", function(){
   askFieldInput.classList.toggle("underline");
 });*/
 
+
+// function go() {
+//   var xhttp = new XMLHttpRequest();
+//   var question = tinymce.get('questionField').getContent();
+//   var wordCnt = tinymce.activeEditor.plugins.wordcount.getCount();
+//   tinymce.get('questionField').setContent('');
+
+//   xhttp.open("POST", '/', true);
+//   xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+//   /*xhttp.send(
+//     {
+//       'text': question, 
+//       'wordCnt': wordCnt
+//     });*/
+//   xhttp.send(`test=${question}&wordCnt=${wordCnt}`);
+//   console.log(question);
+// }
+
 function go() {
   var question = tinymce.get('questionField').getContent();
+  var wordCnt = tinymce.activeEditor.plugins.wordcount.getCount();
   tinymce.get('questionField').setContent('');
-  console.log(question);
-}
+
+  $.post("/",
+  {
+    text: question,
+    wordCnt: wordCnt
+  });
+};

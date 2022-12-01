@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width">
   <title>replit</title>
   <link href="/css/style.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tiny.cloud/1/l8zjrawn1dbffyt6rbg04a479f4n9h183yx86efcd3lvugqk/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/l8zjrawn1dbffyt6rbg04a479f4n9h183yx86efcd3lvugqk/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -38,7 +39,6 @@
         <button>words</button>
         <button>Post</button>
       -->
-
         <textarea id="questionField">
         </textarea>
         <script>
@@ -55,7 +55,18 @@
     </div>
     <div class="notification"></div>
     <div class="questionSort"></div>
-    <div class="questions"></div>
+    <div class="questions">
+      <% for(var idx = 0; idx < questions.length; idx++) { %>
+        <div class="question">
+          <button>
+            <a href="">
+              <p><%- questions[idx].text %></p>
+              <hr>
+            </a>
+          </button>
+        </div>
+      <% } %>
+    </div>
     <script src="/script/script.js"></script>
 </body>
 
