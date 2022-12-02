@@ -217,6 +217,22 @@ label{
     cursor: pointer;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 4px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 4px;
+  }
+
 @keyframes gradient {
     0% {
         background-position: 0% 50%;
