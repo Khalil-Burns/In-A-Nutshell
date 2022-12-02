@@ -8,6 +8,8 @@ const addQuestion = async (req, res, next) => {
             'likes': 0,
             'dislikes': 0,
             'wordCnt': req.body.wordCnt,
+            'question': req.body.question,
+            'tags': '',
             'text': req.body.text
         };
         await firestore.collection('questions').doc().set(data);
@@ -30,9 +32,12 @@ const getAllQuestions = async (req, res, next) => {
         }
         data.forEach(doc => {
             const question = new Question(
+                doc.id,
                 doc.data().likes,
                 doc.data().dislikes,
                 doc.data().wordCnt,
+                doc.data().question,
+                doc.data().tags,
                 doc.data().text
             );
             questionsArray.push(question);
@@ -44,8 +49,35 @@ const getAllQuestions = async (req, res, next) => {
         //res.status(400).send(error.message);
     }
 };
+const getQuestion = async (req, res, next) => {
+    var output = [false, 'Question not found!'];
+    try {
+        const id = req.params.id;
+        const data = await firestore.collection('questions').doc(id).get();
+        if(data.exists) {
+            const question = new Question(
+                data.id,
+                data.data().likes,
+                data.data().dislikes,
+                data.data().wordCnt,
+                data.data().question,
+                data.data().tags,
+                data.data().text
+            );
+            output = [true, question];
+        }
+        
+        //console.log(output);
+    }
+    catch (error) {
+        console.log(error.message);
+        //res.status(400).send(error.message);
+    }
+    return(output);
+};
 
 module.exports = {
     addQuestion,
-    getAllQuestions
+    getAllQuestions,
+    getQuestion
 }
