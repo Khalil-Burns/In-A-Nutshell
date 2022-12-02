@@ -64,9 +64,21 @@ textarea {
     margin-right: 1%;
     margin-top: 20px;
     border-radius: 10px;
-    height: 300px;
+    height: 200px;
     width: 30%;
     float: right;
+}
+
+.ads {
+    background: linear-gradient(-45deg, #00aaff, #001eff, #a30505);
+    background-size: 400% 400%;
+    animation: gradient 5s ease infinite;
+    margin-right: 1%;
+    margin-top: 10px;
+    border-radius: 10px;
+    height: 200px;
+    width: 30%;
+    float: bottom;
 }
 
 .questionSort {
@@ -91,6 +103,9 @@ textarea {
     border-radius: 10px;
     max-height: 300px;
     min-height: 50px;
+    margin-top: 7px;
+    border-radius: 10px;
+    height: 400px;
     width: 67%;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -106,6 +121,12 @@ textarea {
 .question a {
     text-decoration: none;
     color: black;
+}
+
+.Upvote {
+  margin-left: 1%;
+  margin-top: 30px;
+  height: 50px;
 }
 
 form {
