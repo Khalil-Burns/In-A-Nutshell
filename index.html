@@ -15,12 +15,14 @@
         <input type="text" class="askFieldInput"><img></img></textarea>
         <button class="signup">Signup</button>
         <button class="login">Login</button>
-        <select name="cars" id="cars">
-          <option value="volvo">User</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
-        </select>
+        <div class="dropdown">
+          <button onclick="dropdownOnClick()" class="dropdownButton">User</button>
+          <div id="userDropdown" class="dropdownOnClick">
+            <a href="">Settings</a>
+            <a href="">About</a>
+            <a href="">Log out</a>
+          </div>
+        </div>
     </div>
     <div class="askField">
         <!--<textarea type="text" class="askFieldInput" id="askFieldInput"></textarea>
@@ -53,6 +55,12 @@
         <textarea id="title" rows="1"></textarea>
         <input id="postQuestion" type="button" value="Ask!" onclick="post()"/>
     </div>
+    <div id="submitPopup" class="popup">
+      <div class="questionPosted">
+        <span class="close">&times;</span>
+        <p>Question submitted!</p>
+      </div>
+    </div>
     <div class="notification"></div>
     <div class="questionSort"></div>
     <div class="questions">
@@ -60,10 +68,12 @@
         <div class="question">
           <button>
             <a href="/question/<%- questions[idx].id %>">
-              <p><%- questions[idx].text %></p>
+              <p><strong><%- questions[idx].question %></strong></p>
             </a>
           </button>
-          <hr>
+          <% if (idx < questions.length - 1) { %>
+            <hr>
+          <% } %>
         </div>
       <% } %>
     </div>
