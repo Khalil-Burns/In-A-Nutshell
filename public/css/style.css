@@ -69,18 +69,6 @@ textarea {
     float: right;
 }
 
-.ads {
-    background: linear-gradient(-45deg, #00aaff, #001eff, #a30505);
-    background-size: 400% 400%;
-    animation: gradient 5s ease infinite;
-    margin-right: 1%;
-    margin-top: 10px;
-    border-radius: 10px;
-    height: 200px;
-    width: 30%;
-    float: bottom;
-}
-
 .questionSort {
   background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff);
     background-size: 400% 400%;
