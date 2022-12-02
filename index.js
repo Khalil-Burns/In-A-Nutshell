@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const path = require('path');
 
-const _dir = 'C:/Users/natha/In-A-Nutshell';
+const _dir = 'C:/Users/khali/OneDrive/Documents/In-A-Nutshell/In-A-Nutshell';
 //const userRoutes = require('./routes/question-routes');
 const { addQuestion, getAllQuestions, getQuestion } = require('./controllers/QuestionController');
 const { render } = require('ejs');
@@ -27,14 +27,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', async (req, res, next) => {
     var questions = await getAllQuestions(req, res, next);
-    res.render('C:/Users/natha/In-A-Nutshell/index.html',  { questions: questions });
+    res.render(`${_dir}/index.html`,  { questions: questions });
 });
 app.get('/question/:id', async (req, res, next) => {
     //console.log(req.params.id);
     var data = await getQuestion(req, res, next);
     console.log(data);
     if (data[0]) {
-        res.render('C:/Users/natha/In-A-Nutshell/question.html',  { data: data[1] });
+        res.render(`${_dir}/question.html`,  { data: data[1] });
     }
     else {
         res.send('Question not found!');
