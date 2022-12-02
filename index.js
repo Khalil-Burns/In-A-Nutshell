@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const path = require('path');
 
-const _dir = 'C:/Users/khali/OneDrive/Documents/In-A-Nutshell/In-A-Nutshell';
 //const userRoutes = require('./routes/question-routes');
 const { addQuestion, getAllQuestions, getQuestion } = require('./controllers/QuestionController');
 const { render } = require('ejs');
