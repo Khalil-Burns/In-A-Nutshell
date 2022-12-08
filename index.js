@@ -8,6 +8,7 @@ const path = require('path');
 
 //const userRoutes = require('./routes/question-routes');
 const { addQuestion, getAllQuestions, getQuestion } = require('./controllers/QuestionController');
+const { signInWithGoogle, register } = require('./controllers/UserController');
 const { render } = require('ejs');
 
 const app = express();
@@ -39,13 +40,18 @@ app.get('/question/:id', async (req, res, next) => {
         res.send('Question not found!');
     }
 });
+app.get('/signup', async(req, res, next) => {
+    res.render(`${__dirname}/test.html`, { data: '' });
+});
+app.post('/signup', async(req, res, next) => {
+    req.body = { email: 'khalilburns@gmail.com', password: '123456' };
+    //await signInWithGoogle(req, res, next);
+    const data = await register(req, res, next);
+    res.render(`${__dirname}/test.html`, { data: data});
+});
 
 app.post('/', async (req, res, next) => {
     addQuestion(req, res, next);
 });
 
 app.listen(config.port, () => console.log('App is listening on url http://localhost:' + config.port));
-
-module.exports = {
-    //addQuestion
-};
