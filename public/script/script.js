@@ -44,6 +44,13 @@ function dropdownOnClick() {
 
 function post() {
   var question = document.getElementById("title").value;
+
+  if (!question) {
+    submitQuestionPopup.style.display = "block";
+    $("#questionPosted > p").text("You didn't type in a question!");
+    return;
+  }
+
   var text = tinymce.get('questionField').getContent();
   document.getElementById("title").value = '';
   var wordCnt = tinymce.activeEditor.plugins.wordcount.getCount();
@@ -57,11 +64,11 @@ function post() {
   });
 
   submitQuestionPopup.style.display = "block";
+  $("#questionPosted > p").text("Question posted!");
 };
 
 closePopup.onclick = function() {
   submitQuestionPopup.style.display = "none";
-  console.log('yes');
 }
 
 window.onclick = function(event) {

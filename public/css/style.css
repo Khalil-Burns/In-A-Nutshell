@@ -206,7 +206,7 @@ label{
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
-.questionPosted {
+#questionPosted {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
@@ -229,18 +229,18 @@ label{
 /* width */
 ::-webkit-scrollbar {
     width: 8px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
+}
+
+/* Track */
+::-webkit-scrollbar-track {
     border-radius: 4px;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: grey;
     border-radius: 4px;
-  }
+}
 
 @keyframes gradient {
     0% {

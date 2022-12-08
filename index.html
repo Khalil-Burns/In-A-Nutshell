@@ -45,7 +45,9 @@
         </textarea>
         <script>
         tinymce.init({
+          branding: false,
           menubar: false,
+          resize: false,
           selector: '#questionField',
           //plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
           plugins: 'image link wordcount',
@@ -57,7 +59,7 @@
         <input id="postQuestion" type="button" value="Ask!" onclick="post()"/>
     </div>
     <div id="submitPopup" class="popup">
-      <div class="questionPosted">
+      <div id="questionPosted">
         <span class="close">&times;</span>
         <p>Question submitted!</p>
       </div>
@@ -67,10 +69,8 @@
     <div class="questions">
       <% for(var idx = 0; idx < questions.length; idx++) { %>
         <div class="question">
-          <button>
-            <a href="/question/<%- questions[idx].id %>">
+          <button onclick="location.href = '/question/<%- questions[idx].id %>'">
               <p><strong><%- questions[idx].question %></strong></p>
-            </a>
           </button>
           <% if (idx < questions.length - 1) { %>
             <hr>
