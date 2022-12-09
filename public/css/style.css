@@ -130,13 +130,21 @@ form.example input[type=text] {
     font-size: 17px;
     border: 1px solid grey;
     float: left;
-    width: 80%;
+    width: 81%;
     background: #f1f1f1;
 }
 
+/* form.example button{
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
+    text-align: left;
+    border-radius: 0px;
+} */
+
 form.example button {
-    float: left;
-    width: 20%;
+    float: right;
+    width: 15%;
     padding: 10px;
     background: #2196F3;
     color: white;
