@@ -102,13 +102,23 @@ textarea {
     padding-bottom: 5px;
     overflow-y: scroll;
 }
+
 .question button {
     width: 98%;
     margin-left: 1%;
     margin-right: 1%;
-    text-align: left;
+    text-align: left;                              
     border-radius: 0px;
 }
+.question button:hover {
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
+    text-align: left;                               
+    border-radius: 0px;
+    background: red;
+}
+
 .question a {
     text-decoration: none;
     color: black;
@@ -118,6 +128,12 @@ textarea {
   margin-left: 1%;
   margin-top: 30px;
   height: 50px;
+}
+.upvote button:hover {
+  margin-left: 1%;
+  margin-top: 30px;
+  height: 50px;
+  background: red;
 }
 
 form {
@@ -130,7 +146,9 @@ form.example input[type=text] {
     font-size: 17px;
     border: 1px solid grey;
     float: left;
-    width: 81%;
+    width: 81.6%;
+    margin-top: 4px;
+    border-radius: 5px;
     background: #f1f1f1;
 }
 
@@ -155,10 +173,16 @@ form.example button {
 }
 
 form.example button:hover {
-    margin-left: 1%;
-    float:right;
-    background: #0b7dda;
-  }
+    float: right;
+    width: 15%;
+    padding: 10px;
+    background: red;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+}
   
   /* Clear floats */
   form.example::after {
@@ -189,6 +213,17 @@ button {
     border: 2px solid #ccc;
     border-radius: 4px;
 }
+
+/* .button :hover {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 7px;                                    BRUH WHY WONT IT WORK. I just want the home button to change color when hovered
+    margin-right: 7px;
+    height: calc(100% - 14px);
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background: rgb(27, 143, 27);
+  } */
 
 .questionTitle {
     background-color: rgb(81, 178, 93);
@@ -221,6 +256,16 @@ label{
     border: 2px solid #ccc;
     border-radius: 4px;
 }
+.label:hover {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 7px;
+    margin-right: 7px;
+    height: calc(100% - 14px);
+    background-color: red;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+  }
 
 .dropdownOnClick {
     display: none;
