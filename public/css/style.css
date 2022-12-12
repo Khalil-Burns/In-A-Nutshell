@@ -38,6 +38,10 @@ textarea {
     float: right;
 }
 
+.homeButton:hover {
+    background-color: red;
+}
+
 .topBar {
     background: linear-gradient(-45deg, #568aa6, #4400ff, #4a7a96);
     background-size: 400% 400%;
