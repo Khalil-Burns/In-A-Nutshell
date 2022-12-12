@@ -41,7 +41,32 @@ const signInWithGoogle = async (req, res, next) => {
    });*/
   }
 
-  async function register(req, res) {
+  async function curUser(req, res, next) {
+    var output = {};
+    const { email, password } = req.body;
+
+    try {
+      const auth = getAuth();
+      if (auth.currentUser) {
+        const adminAuth = getAdminAuth();
+        const token = await adminAuth.createCustomToken(
+          auth.currentUser.uid
+        );
+        output = { user: auth.currentUser };
+        const user = await firestore.doc(`users/${auth.currentUser.uid}`).get();//.set({ secureNote });
+      }
+      else {
+        //output = { user: 'null'};
+      }
+    } catch (err) {
+      var { code } = err;
+      code = code.replace('auth/', '');
+      jsonConcat(output, { 'error': code });
+    }
+    return(output);
+  }
+
+  async function register(req, res, next) {
     var output = {};
     const { email, password } = req.body;
 
@@ -56,23 +81,25 @@ const signInWithGoogle = async (req, res, next) => {
       const token = await adminAuth.createCustomToken(
         credential.user.uid
       );
-      await firestore.doc(`users/${credential.user.uid}`);//.set({ secureNote });
-      jsonConcat(output, { token });
+      const user = await firestore.doc(`users/${credential.user.uid}`).get();//.set({ secureNote });
+      
+      jsonConcat(output, { user: credential.user });
     } catch (err) {
       var { code } = err;
       code = code.replace('auth/', '');
       jsonConcat(output, { 'error': code });
     }
-
-    console.log(output);
     return(output);
   }
-  async function signIn(req, res) {
+
+
+  async function signIn(req, res, next) {
     var output = {};
     const { email, password } = req.body;
 
     try {
       const auth = getAuth();
+
       const credential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -82,27 +109,30 @@ const signInWithGoogle = async (req, res, next) => {
       const token = await adminAuth.createCustomToken(
         credential.user.uid
       );
-      await firestore.doc(`users/${credential.user.uid}`);//.set({ secureNote });
-      jsonConcat(output, { token });
+      const user = await firestore.doc(`users/${credential.user.uid}`).get();//.set({ secureNote });
+
+      jsonConcat(output, { user: credential.user });
     } catch (err) {
       var { code } = err;
       code = code.replace('auth/', '');
       jsonConcat(output, { 'error': code });
+      console.log(err);
     }
 
-    console.log(output);
     return(output);
   }
 
   //help function
   function jsonConcat(o1, o2) {
     for (var key in o2) {
-     o1[key] = o2[key];
+      o1[key] = o2[key];
     }
     return o1;
-   }
+  }
 
 module.exports = {
     signInWithGoogle,
-    register
+    register,
+    signIn,
+    curUser
 }

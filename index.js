@@ -8,7 +8,7 @@ const path = require('path');
 
 //const userRoutes = require('./routes/question-routes');
 const { addQuestion, getAllQuestions, getQuestion } = require('./controllers/QuestionController');
-const { signInWithGoogle, register } = require('./controllers/UserController');
+const { signInWithGoogle, register, signIn, curUser } = require('./controllers/UserController');
 const { render } = require('ejs');
 
 const app = express();
@@ -27,26 +27,30 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', async (req, res, next) => {
     var questions = await getAllQuestions(req, res, next);
-    res.render(`${__dirname}/index.html`,  { questions: questions });
+    const user = await curUser(req, res, next);
+    
+    res.render(`${__dirname}/index.html`,  { questions: questions, user: user });
 });
 app.get('/question/:id', async (req, res, next) => {
     //console.log(req.params.id);
     var data = await getQuestion(req, res, next);
-    console.log(data);
+    const user = await curUser(req, res, next);
+    
     if (data[0]) {
-        res.render(`${__dirname}/question.html`,  { data: data[1] });
+        res.render(`${__dirname}/question.html`,  { data: data[1], user: user });
     }
     else {
         res.send('Question not found!');
     }
 });
 app.get('/signup', async(req, res, next) => {
+    const user = await curUser(req, res, next);
     res.render(`${__dirname}/test.html`, { data: '' });
 });
 app.post('/signup', async(req, res, next) => {
     req.body = { email: 'khalilburns@gmail.com', password: '123456' };
     //await signInWithGoogle(req, res, next);
-    const data = await register(req, res, next);
+    const data = await signIn(req, res, next);
     res.render(`${__dirname}/test.html`, { data: data});
 });
 
