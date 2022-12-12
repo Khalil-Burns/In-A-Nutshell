@@ -146,11 +146,14 @@ form {
 }
 
 form.example input[type=text] {
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 1%;
+    padding-right: 1%;
     font-size: 17px;
     border: 1px solid grey;
     float: left;
-    width: 81.6%;
+    width: 79.6%;
     margin-top: 4px;
     border-radius: 5px;
     background: #f1f1f1;
