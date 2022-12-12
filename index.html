@@ -19,7 +19,13 @@
         <button class="signup">Signup</button>
         <button class="login">Login</button>
         <div class="dropdown">
-          <button onclick="dropdownOnClick()" class="dropdownButton">User</button>
+          <button onclick="dropdownOnClick()" class="dropdownButton">
+            <% if (user.user) {%>
+              <%- user.user.email %>
+            <%} else {%>
+              Anonymous
+            <% } %>
+          </button>
           <div id="userDropdown" class="dropdownOnClick">
             <a href="">Settings</a>
             <a href="">About</a>
