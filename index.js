@@ -8,7 +8,7 @@ const path = require('path');
 
 //const userRoutes = require('./routes/question-routes');
 const { addQuestion, getAllQuestions, getQuestion } = require('./controllers/QuestionController');
-const { signInWithGoogle, register, signIn, curUser } = require('./controllers/UserController');
+const { register, signIn, curUser, logOut } = require('./controllers/UserController');
 const { render } = require('ejs');
 
 const app = express();
@@ -27,9 +27,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', async (req, res, next) => {
     var questions = await getAllQuestions(req, res, next);
-    const user = await curUser(req, res, next);
-    
-    res.render(`${__dirname}/index.html`,  { questions: questions, user: user });
+    const data = await curUser(req, res, next);
+    res.render(`${__dirname}/index.html`,  { questions: questions, user: data.user });
 });
 app.get('/question/:id', async (req, res, next) => {
     //console.log(req.params.id);
@@ -43,18 +42,26 @@ app.get('/question/:id', async (req, res, next) => {
         res.send('Question not found!');
     }
 });
-app.get('/signup', async(req, res, next) => {
+/*app.get('/signin', async(req, res, next) => {
     const user = await curUser(req, res, next);
     res.render(`${__dirname}/test.html`, { data: '' });
-});
+});*/
+
 app.post('/signup', async(req, res, next) => {
-    req.body = { email: 'khalilburns@gmail.com', password: '123456' };
-    //await signInWithGoogle(req, res, next);
+    const data = await register(req, res, next);
+    res.send( { error: data.error, user: data.user } );
+});
+app.post('/signin', async(req, res, next) => {
     const data = await signIn(req, res, next);
-    res.render(`${__dirname}/test.html`, { data: data});
+    res.send( { error: data.error, user: data.user } );
+});
+app.post('/logout', async(req, res, next) => {
+    const data = await logOut(req, res, next);
+    console.log(data);
+    res.send( { error: data.error } );
 });
 
-app.post('/', async (req, res, next) => {
+app.post('/a', async(req, res, next) => {
     addQuestion(req, res, next);
 });
 
