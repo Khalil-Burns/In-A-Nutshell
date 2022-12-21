@@ -14,7 +14,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="topBar">
         <button onclick="location.href = '/'" class="homeButton">
-          Home
+          <img src="/images/websiteLogo.png" alt="Home" id="logo">
+          <style>
+            #logo{
+              height: 100%;
+              width: 100%;
+            }
+          </style>
         </button>
         <form class="example" action="action_page.php">
           <input type="text" placeholder="Search.." name="search">

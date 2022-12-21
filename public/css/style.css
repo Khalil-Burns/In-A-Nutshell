@@ -1,5 +1,19 @@
 html, body {
-    background-color: lightblue;
+    
+    
+    background-color: #d3d3d3;
+    /* background-color: #F5B700; */
+    /* background-color: #F5B700; */
+    /* background-color: #F5B700; */
+    /* background-color: #F5B700; */
+    /* background-color: #F5B700; */
+
+    /* background-color: #E2C391; */
+    /* background-color: #26547C; */
+    /* background-color: #F5B700; */
+    /* background-color: #CBAC88; */
+
+    /* background-color: #404634; */
     width: 100%;
     height:100%;
     padding-right: 0px;
@@ -39,27 +53,29 @@ textarea {
 }
 
 .homeButton:hover {
-    background-color: red;
+    /* background-color: red; */
+    background-color: #D8D5DB;
 }
 
 .signup:hover {
-    background-color: red;
+    background-color: #D8D5DB;
 }
 
 .login:hover {
-    background-color: red;
+    background-color: #D8D5DB;
 }
 
 .dropdownButton:hover {
-    background-color: red;
+    background-color: #D8D5DB;
 }
 
 .askFieldInput:hover {
-    background-color: red;
+    background-color: #D8D5DB;
 }
 
 .topBar {
-    background: linear-gradient(-45deg, #568aa6, #4400ff, #4a7a96);
+    /* background: linear-gradient(-45deg, #568aa6, #4400ff, #4a7a96); */
+    background: white;
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
     margin-left: 1%;
@@ -71,7 +87,8 @@ textarea {
     justify-content: center;
 }
 .askField {
-    background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff);
+    /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
+    background: white;
     background-size: 400% 400%;
     animation: gradient 20s ease infinite;
     margin-left: 1%;
@@ -81,7 +98,8 @@ textarea {
     display: inline-block;
 }
 .notification {
-    background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff);
+    /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
+    background: white;
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-right: 1%;
@@ -93,7 +111,8 @@ textarea {
 }
 
 .questionSort {
-  background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff);
+  /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
+  background: white;
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
@@ -104,7 +123,8 @@ textarea {
     width: 67%;
 }
 .questions {
-    background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff);
+    /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
+    background: white;
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
@@ -136,7 +156,7 @@ textarea {
     margin-right: 1%;
     text-align: left;                               
     border-radius: 0px;
-    background: red;
+    background-color: #D8D5DB;
 }
 
 .question a {
@@ -153,7 +173,7 @@ textarea {
   margin-left: 1%;
   margin-top: 30px;
   height: 50px;
-  background: red;
+  background-color: #D8D5DB;
 }
 
 form {
@@ -167,7 +187,7 @@ form.example input[type=text] {
     padding-left: 1%;
     padding-right: 1%;
     font-size: 17px;
-    border: 1px solid grey;
+    border: 1px solid white;
     float: left;
     width: 79.6%;
     margin-top: 4px;
@@ -185,24 +205,30 @@ form.example input[type=text] {
 
 form.example button {
     float: right;
-    width: 15%;
-    padding: 10px;
-    background: #2196F3;
+    width: 16.5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 1%;
+    padding-right: 1%;
+    background: #A69C61;
     color: white;
     font-size: 17px;
-    border: 1px solid grey;
+    border: 1px solid white;
     border-left: none; /* Prevent double borders */
     cursor: pointer;
 }
 
 form.example button:hover {
     float: right;
-    width: 15%;
-    padding: 10px;
-    background: red;
+    width: 16.5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 1%;
+    padding-right: 1%;
+    background-color: #b4ae8c;
     color: white;
     font-size: 17px;
-    border: 1px solid grey;
+    border: 1px solid #b4ae8c;
     border-left: none; /* Prevent double borders */
     cursor: pointer;
 }
@@ -249,12 +275,10 @@ button {
   } */
 
 .questionTitle {
-    background-color: rgb(81, 178, 93);
     margin-left: 1%;
 }
 
 .questionDisplay {
-    background-color: red;
     margin-left: 1%;
     margin-top: 0px;
 }
@@ -285,8 +309,8 @@ label{
     margin-left: 7px;
     margin-right: 7px;
     height: calc(100% - 14px);
-    background-color: red;
-    border: 2px solid #ccc;
+    background-color: #D8D5DB;
+    border: 2px solid #D8D5DB;
     border-radius: 4px;
   }
 
