@@ -10,7 +10,8 @@ const addQuestion = async (req, res, next) => {
             'wordCnt': req.body.wordCnt,
             'question': req.body.question,
             'tags': '',
-            'text': req.body.text
+            'text': req.body.text,
+            'user': req.body.user
         };
         await firestore.collection('questions').doc().set(data);
         //res.send('Record saved successfully');
@@ -75,6 +76,37 @@ const getQuestion = async (req, res, next) => {
     }
     return(output);
 };
+
+const like = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const user = await firestore.collection('users').where("email", "==", data.email)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    if (doc.data().password == data.oldPassword) {
+                        doc.ref.update(
+                            {
+                                'email': data.email,
+                                'password': data.newPassword,
+                                'username': data.newUsername
+                            }
+                        );
+                        output = [true];
+                    }
+                    else {
+                        output = [false, 'Incorrect Password'];
+                    }
+                });
+            });
+        
+        return(output);
+    }
+    catch (error) {
+        console.log(error);
+        return([false, 'it don\'t work dude. Error: ', error]);
+    }
+}
 
 module.exports = {
     addQuestion,

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>InANutshell</title>
   <link href="/css/style.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tiny.cloud/1/l8zjrawn1dbffyt6rbg04a479f4n9h183yx86efcd3lvugqk/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -20,24 +20,36 @@
           <input type="text" placeholder="Search.." name="search">
           <button type="submit"><i class="fa fa-search"></i></button>
         </form>
-        <button class="signup">Signup</button>
-        <button class="login">Login</button>
-        <div class="dropdown">
-          <button onclick="dropdownOnClick()" class="dropdownButton">
-            <% if (user.user) {%>
-              <%- user.user.email %>
-            <%} else {%>
-              Anonymous
-            <% } %>
-          </button>
-          <div id="userDropdown" class="dropdownOnClick">
-            <a href="">Settings</a>
-            <a href="">About</a>
-            <a href="">Log out</a>
+        <% if (!user) {%>
+          <button onclick="signupPopup()" class="signup">Signup</button>
+          <button onclick="loginPopup()" class="login">Login</button>
+        <% } %>
+        <% if (user) {%>
+          <div class="dropdown">
+            <button onclick="dropdownOnClick()" class="dropdownButton" id="user">
+              <%- user.email %>
+            </button>
+            <div id="userDropdown" class="dropdownOnClick">
+              <a href="">Settings</a>
+              <a href="">About</a>
+              <% if (user) {%>
+                <a href="" onclick="logout()">Log out</a>
+              <% } %>
+            </div>
           </div>
-        </div>
+        <% } %>
     </div>
     <div class="askField">
+      <% if (!user) { %>
+        <div id="mustLogIn">You Must Log In First</div>
+        <style>
+          #mustLogIn {
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+          }
+        </style>
+      <% } %>
         <!--<textarea type="text" class="askFieldInput" id="askFieldInput"></textarea>
         <br>
         <button id="B">B</button>
@@ -54,27 +66,67 @@
         <button>words</button>
         <button>Post</button>
       -->
-        <textarea id="questionField">
-        </textarea>
+      <div id="askFieldContainer">
+        <% if (!user) { %>
+          <style>
+            #askFieldContainer {
+              -webkit-filter: blur(5px);
+              -moz-filter: blur(5px);
+              -o-filter: blur(5px);
+              -ms-filter: blur(5px);
+              filter: blur(5px);
+            }
+          </style>
+        <% } %>
+        <textarea id="questionField"></textarea>
         <script>
-        tinymce.init({
-          branding: false,
-          menubar: false,
-          resize: false,
-          selector: '#questionField',
-          //plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
-          plugins: 'image link wordcount',
-          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | wordcount',
-        });
-
+          tinymce.init({
+            branding: false,
+            menubar: false,
+            resize: false,
+            selector: '#questionField',
+            //plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+            plugins: 'image link wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | wordcount',
+          });
         </script>
-        <textarea id="title" rows="1"></textarea>
-        <input id="postQuestion" type="button" value="Ask!" onclick="post()"/>
+        <% if (user) { %>
+          <textarea id="title" rows="1"></textarea>
+          <input id="postQuestion" type="button" value="Ask!" onclick="post()"/>
+        <% } %>
+      </div>
     </div>
     <div id="submitPopup" class="popup">
       <div id="questionPosted">
-        <span class="close">&times;</span>
+        <span id="closeQuestion" class="close">&times;</span>
         <p>Question submitted!</p>
+      </div>
+    </div>
+
+    <div id="signInPopup" class="popup">
+      <div id="signInUI">
+        <span class="close" id="closeSignIn">&times;</span>
+        <label for="username">Username:</label><br>
+        <input type="text" id="signInUsername" name="username" value=""><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="signInEmail" name="email" value=""><br>
+        <label for="password">Password:</label><br>
+        <input type="text" id="signInPassword" name="password" value=""><br><br>
+        <input type="button" value="Submit" onclick="login()">
+        <p id="signInError">asdf</p>
+      </div>
+    </div>
+    <div id="signUpPopup" class="popup">
+      <div id="signUpUI">
+        <span class="close" id="closeSignUp">&times;</span>
+        <label for="username">Username:</label><br>
+        <input type="text" id="signUpUsername" name="username" value=""><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="signUpEmail" name="email" value=""><br>
+        <label for="password">Password:</label><br>
+        <input type="text" id="signUpPassword" name="password" value=""><br><br>
+        <input type="button" value="Submit" onclick="signup()">
+        <p id="signUpError">asdf</p>
       </div>
     </div>
     <div class="notification"></div>
@@ -82,15 +134,36 @@
     <div class="questions">
       <% for(var idx = 0; idx < questions.length; idx++) { %>
         <div class="question">
-          <button onclick="location.href = '/question/<%- questions[idx].id %>'">
-              <p><strong><%- questions[idx].question %></strong></p>
-          </button>
+            <table>
+              <tr>
+                <td>
+                  <button class="like" onclick="like('<%- questions[idx].id %>')">
+                    <%- questions[idx].likes %> ^
+                  </button>
+                  <button class="dislike" onclick="dislike('<%- questions[idx].id %>')">
+                    <%- questions[idx].dislikes %> v
+                  </button>
+                </td>
+                <td>
+                   <button onclick="location.href = '/question/<%- questions[idx].id %>'" class="questionButton">
+                    <strong><%- questions[idx].question %></strong>
+                  </button>
+                </td>
+              </tr>
+            </table>
           <% if (idx < questions.length - 1) { %>
             <hr>
           <% } %>
         </div>
       <% } %>
     </div>
+    <% if (user) { %>
+      <script>
+        var userID = '<%- user.uid %>';
+        var userEmail = '<%- user.email %>';
+        var userPassword = '<%- user.password %>';
+      </script>
+    <% } %>
     <script src="/script/script.js"></script>
 </body>
 
