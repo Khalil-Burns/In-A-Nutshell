@@ -12,4 +12,4 @@ const db = admin.initializeApp({
 });
 const db2 = initializeApp(firebaseConfig);
 
-module.exports = db, db2;
+module.exports = db;

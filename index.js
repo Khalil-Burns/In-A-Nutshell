@@ -7,7 +7,7 @@ const config = require('./config');
 const path = require('path');
 
 //const userRoutes = require('./routes/question-routes');
-const { addQuestion, getAllQuestions, getQuestion } = require('./controllers/QuestionController');
+const { addQuestion, getAllQuestions, getQuestion, like, unlike, dislike, undislike } = require('./controllers/QuestionController');
 const { register, signIn, curUser, logOut } = require('./controllers/UserController');
 const { render } = require('ejs');
 
@@ -23,29 +23,45 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//app.use('/api', userRoutes.routes);
-
 app.get('/', async (req, res, next) => {
     var questions = await getAllQuestions(req, res, next);
-    const data = await curUser(req, res, next);
-    res.render(`${__dirname}/index.html`,  { questions: questions, user: data.user });
+    const user = await curUser(req, res, next);
+    res.render(`${__dirname}/index.html`,  { data: { questions: questions, user: user.user }});
 });
 app.get('/question/:id', async (req, res, next) => {
     //console.log(req.params.id);
     var data = await getQuestion(req, res, next);
     const user = await curUser(req, res, next);
-    
+    console.log(data);
     if (data[0]) {
-        res.render(`${__dirname}/question.html`,  { data: data[1], user: user });
+        res.render(`${__dirname}/question.html`,  { data: { question: data[1], user: user.user }});
     }
     else {
         res.send('Question not found!');
     }
 });
-/*app.get('/signin', async(req, res, next) => {
-    const user = await curUser(req, res, next);
-    res.render(`${__dirname}/test.html`, { data: '' });
-});*/
+
+app.post('/like/:id', async (req, res, next) => {
+    await like(req, res, next);
+    console.log('complete like');
+    res.send('complete like');
+});
+app.post('/unlike/:id', async (req, res, next) => {
+    await unlike(req, res, next);
+    console.log('complete unlike');
+    res.send('complete unlike');
+});
+app.post('/dislike/:id', async (req, res, next) => {
+    await dislike(req, res, next);
+    console.log('complete dislike');
+    res.send('complete dislike');
+});
+app.post('/undislike/:id', async (req, res, next) => {
+    await undislike(req, res, next);
+    console.log('complete undislike');
+    res.send('complete undislike');
+});
+
 
 app.post('/signup', async(req, res, next) => {
     const data = await register(req, res, next);
@@ -57,11 +73,10 @@ app.post('/signin', async(req, res, next) => {
 });
 app.post('/logout', async(req, res, next) => {
     const data = await logOut(req, res, next);
-    console.log(data);
     res.send( { error: data.error } );
 });
 
-app.post('/a', async(req, res, next) => {
+app.post('/ask', async(req, res, next) => {
     addQuestion(req, res, next);
 });
 
