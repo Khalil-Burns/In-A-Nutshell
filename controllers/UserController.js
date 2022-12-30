@@ -52,11 +52,14 @@ async function register(req, res, next) {
       credential.user.uid
     );
     const user = await firestore.doc(`users/${credential.user.uid}`).get();//.set({ secureNote });
-    
+
+    await firestore.collection('users').doc(credential.user.uid).set({'notifications': {}});
+
     jsonConcat(output, { user: credential.user });
   } catch (err) {
     var { code } = err;
-    code = code.replace('auth/', '');
+    console.log(`error: ${code}`);
+    //code = code.replace('auth/', '');
     jsonConcat(output, { 'error': code });
   }
   return(output);

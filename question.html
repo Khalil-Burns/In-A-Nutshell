@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html>
 <!--sup-->
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>InANutshell</title>
   <link href="/css/style.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tiny.cloud/1/l8zjrawn1dbffyt6rbg04a479f4n9h183yx86efcd3lvugqk/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -12,64 +13,304 @@
 
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <div class="topBar">
-        <button onclick="location.href = '/'" class="homeButton">
-          Home
-        </button>
-        <form class="example" action="action_page.php">
-          <input type="text" placeholder="Search.." name="search">
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-        <button class="signup">Signup</button>
-        <button class="login">Login</button>
-        <select name="cars" id="cars">
-          <option value="volvo">User</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
-        </select>
-    </div>
-    <div class="questionTitle">
-        <h1><%- data.question %></h1>
-    </div>
-    <div class="questionDisplay">
-        <p><%- data.text %></p>
-    </div>
-    <div class="notification"></div>
-    <div class="questionSort"></div>
-    <div class="questions"></div>
-    <div class="askField">
-        <!--<textarea type="text" class="askFieldInput" id="askFieldInput"></textarea>
-        <br>
-        <button id="B">B</button>
-        <button id="I">I</button>
-        <button id="U">U</button>
-        <select name="cars" id="cars">
-            <option> <div id="test">testin</div></option>
-            <option> <div id="test">testin</div></option>
-            <option> <div id="test">testin</div></option>
-        </select>
-        <input type="file" id="upload" hidden/>
-        <label for="upload">Choose file</label>
-        <button>Clear</button>
-        <button>words</button>
-        <button>Post</button>
-      -->
-        <textarea id="questionField">
-        </textarea>
-        <script>
-        tinymce.init({
-          menubar: false,
-          selector: '#questionField',
-          //plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
-          plugins: 'image link wordcount',
-          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | wordcount',
-        });
-        </script>
-        <input type="button" value="getText" onclick="reply()"/>
+    <% if (data.user) { %>
+      <script>
+        var userID = '<%- data.user.uid %>';
+        var userEmail = '<%- data.user.email %>';
+        var userPassword = '<%- data.user.password %>';
+        var questionID = '<%- data.question.id %>';
         
+        var likesQues;
+        var dislikesQues;
+
+        '<% if (data.question.usersLiked[data.user.uid]) { %>'
+          likesQues = '<%- data.question.usersLiked[data.user.uid] %>';
+        '<% } %>'
+
+        
+        var answers = '<%- data.question.answers %>';
+        console.log('<%- data.question.answers %>');
+
+        var likesAns = {};
+        
+        '<% for (var idx = 0; idx < data.question.answers.length; idx++) { %>'
+          '<% if (data.question.answers[idx].usersLiked[data.user.uid]) { %>'
+            likesAns['<%- data.question.answers[idx].id %>'] = '<%- data.question.answers[idx].usersLiked[data.user.uid] %>';
+          '<% } %>'
+
+        '<% } %>'
+      </script>
+    <% } %>
+    
+    <div class="topBar">
+      <button onclick="location.href = '/'" class="homeButton"  style="float: left">
+        <img src="/images/websiteLogo.png" alt="Home" id="logo">
+        <style>
+          #logo{
+            height: 100%;
+            width: 100%;
+          }
+        </style>
+      </button>
+        <% if (!data.user) {%>
+          <button onclick="signupPopup()" class="signup" style="float: right">Signup</button>
+          <button onclick="loginPopup()" class="login" style="float: right">Login</button>
+        <% } %>
+        <% if (data.user) {%>
+          <div class="dropdown">
+            <button onclick="dropdownOnClick()" class="dropdownButton" id="user"  style="float: right">
+              <%- data.user.email %>
+            </button>
+            <div id="userDropdown" class="dropdownOnClick">
+              <a href="">Settings</a>
+              <a href="">About</a>
+              <% if (data.user) {%>
+                <a href="" onclick="logout()">Log out</a>
+              <% } %>
+            </div>
+          </div>
+        <% } %>
     </div>
-    <script src="/script/script.js"></script>
+    
+    <div class="notification"></div>
+
+    <div class="question">
+      <table>
+        <tr>
+          <td>
+            <% if (data.user) { %>
+              <button class="like" id="likeQues-<%- data.question.id %>" onclick="preLikeQues('<%- data.question.id %>')"
+                <% if(data.question.usersLiked[data.user.uid] == 1) { %>
+                  style="background-color: red;"
+                <% } %>
+              >
+                <p>
+                  <%- data.question.likes %>
+                </p> ^
+                <script>
+                  function preLikeQues(id) {
+                    if (!(likesQues == 1)) {
+                      var amount = 0;
+                      if (likesQues == 2) {
+                        amount = 1;
+                      }
+                      likeQues(id, amount);
+                      likesQues = 1;
+                    }
+                    else {
+                      unlikeQues(id);
+                      likesQues = 0;
+                    }
+                  }
+                </script>
+              </button>
+
+              <button class="dislike" id="dislikeQues-<%- data.question.id %>" onclick="preDislikeQues('<%- data.question.id %>')"
+                <% if(data.question.usersLiked[data.user.uid] == 2) { %>
+                  style="background-color: red;"
+                <% } %>
+              >
+                <p>
+                  <%- data.question.dislikes %>
+                </p> v
+                <script>
+                  function preDislikeQues(id) {
+                    if (likesQues != 2) {
+                      var amount = 0;
+                      if (likesQues == 1) {
+                        amount = 1;
+                      }
+                      dislikeQues(id, amount);
+                      likesQues = 2;
+                    }
+                    else {
+                      undislikeQues(id);
+                      likesQues = 0;
+                    }
+                  }
+                </script>
+              </button>
+
+            <% } else { %>
+              <p class="like">
+                <%- data.question.likes %> ^
+              </p>
+              <p class="dislike">
+                <%- data.question.dislikes %> v
+              </p>
+            <% } %>
+          </td>
+          <td>
+            <div class="questionTitle">
+              <h1><%- data.question.question %></h1>
+            </div>
+            <div class="questionDisplay">
+              <p><%- data.question.text %></p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="answersSort"></div>
+    <div class="answers">
+      <% for(var idx = 0; idx < data.question.answers.length; idx++) { %>
+        <div class="answer">
+            <table>
+              <tr>
+                <td>
+                  <% if (data.user) { %>
+                    <button class="like" id="likeAns-<%- data.question.answers[idx].id %>" onclick="preLike('<%- data.question.answers[idx].id %>')"
+                      <% if(data.question.answers[idx].usersLiked[data.user.uid] == 1) { %>
+                        style="background-color: red;"
+                      <% } %>
+                    >
+                      <p>
+                        <%- data.question.answers[idx].likes %>
+                      </p> ^
+                      <script>
+                        function preLike(id) {
+                          if (!(likesAns[id] == 1)) {
+                            var amount = 0;
+                            if (likesAns[id] == 2) {
+                              amount = 1;
+                            }
+                            likeAns(id, amount);
+                            likesAns[id] = 1;
+                          }
+                          else {
+                            unlikeAns(id);
+                            likesAns[id] = 0;
+                          }
+                        }
+                      </script>
+                    </button>
+                    <button class="dislike" id="dislikeAns-<%- data.question.answers[idx].id %>" onclick="preDislike('<%- data.question.answers[idx].id %>')"
+                      <% if(data.question.answers[idx].usersLiked[data.user.uid] == 2) { %>
+                        style="background-color: red;"
+                      <% } %>
+                    >
+                      <p>
+                        <%- data.question.answers[idx].dislikes %>
+                      </p> v
+                      <script>
+                        function preDislike(id) {
+                          if (likesAns[id] != 2) {
+                            var amount = 0;
+                            if (likesAns[id] == 1) {
+                              amount = 1;
+                            }
+                            dislikeAns(id, amount);
+                            likesAns[id] = 2;
+                          }
+                          else {
+                            undislikeAns(id);
+                            likesAns[id] = 0;
+                          }
+                        }
+                      </script>
+                    </button>
+                  <% } else { %>
+                    <p class="like">
+                      <%- data.question.answers[idx].likes %> ^
+                    </p>
+                    <p class="dislike">
+                      <%- data.question.answers[idx].dislikes %> v
+                    </p>
+                  <% } %>
+                </td>
+                <td>
+                  <div class="answerButton" style="width: 100%; height: 100%; background-color: beige;">
+                    <strong><%- data.question.answers[idx].title %></strong>
+                    <%- data.question.answers[idx].answer %>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          <% if (idx < data.question.answers.length - 1) { %>
+            <hr>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+    <div class="answerField">
+      <% if (!data.user) { %>
+        <div id="mustLogIn">You Must Log In First</div>
+        <style>
+          #mustLogIn {
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+          }
+        </style>
+      <% } %>
+        
+      <div id="answerFieldContainer">
+        <% if (!data.user) { %>
+          <style>
+            #answerFieldContainer {
+              -webkit-filter: blur(5px);
+              -moz-filter: blur(5px);
+              -o-filter: blur(5px);
+              -ms-filter: blur(5px);
+              filter: blur(5px);
+            }
+          </style>
+        <% } %>
+        <textarea id="answerField"></textarea>
+        <script>
+          tinymce.init({
+            branding: false,
+            menubar: false,
+            resize: false,
+            selector: '#answerField',
+            //plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+            plugins: 'image link wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | wordcount',
+          });
+        </script>
+        <% if (data.user) { %>
+          <textarea id="title" rows="1"></textarea>
+          <input id="postAnswer" type="button" value="Ask!" onclick="post()"/>
+        <% } %>
+      </div>
+    </div>
+    <div id="submitPopup" class="popup">
+      <div id="answerPosted">
+        <span id="closeAnswer" class="close">&times;</span>
+        <p>Answer submitted!</p>
+      </div>
+    </div>
+
+    <div id="signInPopup" class="popup">
+      <div id="signInUI">
+        <span class="close" id="closeSignIn">&times;</span>
+        <label for="username">Username:</label><br>
+        <input type="text" id="signInUsername" name="username" value=""><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="signInEmail" name="email" value=""><br>
+        <label for="password">Password:</label><br>
+        <input type="text" id="signInPassword" name="password" value=""><br><br>
+        <input type="button" value="Submit" onclick="login()">
+        <p id="signInError">asdf</p>
+      </div>
+    </div>
+    <div id="signUpPopup" class="popup">
+      <div id="signUpUI">
+        <span class="close" id="closeSignUp">&times;</span>
+        <label for="username">Username:</label><br>
+        <input type="text" id="signUpUsername" name="username" value=""><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="signUpEmail" name="email" value=""><br>
+        <label for="password">Password:</label><br>
+        <input type="text" id="signUpPassword" name="password" value=""><br><br>
+        <input type="button" value="Submit" onclick="signup()">
+        <p id="signUpError">asdf</p>
+      </div>
+    </div>
+
+    <script src="/script/scriptQuestion.js"></script>
+<script src="/script/script.js"></script>
 </body>
 
 </html>

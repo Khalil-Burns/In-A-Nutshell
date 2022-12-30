@@ -1,13 +1,9 @@
-class Question {
-    constructor(id, likes, dislikes, username, email, password, ) {
-        this.id = id;
-        this.likes = likes;
-        this.dislikes = dislikes;
-        this.wordCnt = wordCnt;
-        this.question = question;
-        this.tags = tags;
-        this.text = text;
+class User {
+    constructor(username, email, password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 }
 
-module.exports = Question;
+module.exports = User;
