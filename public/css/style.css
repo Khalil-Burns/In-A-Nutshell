@@ -52,6 +52,13 @@ textarea {
     float: right;
 }
 
+.answers {
+    width: 67%;
+}
+.question {
+    width: 67%;
+}
+
 .homeButton:hover {
     /* background-color: red; */
     background-color: #D8D5DB;

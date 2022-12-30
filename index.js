@@ -7,8 +7,28 @@ const config = require('./config');
 const path = require('path');
 
 //const userRoutes = require('./routes/question-routes');
-const { addQuestion, getAllQuestions, getQuestion, like, unlike, dislike, undislike } = require('./controllers/QuestionController');
-const { register, signIn, curUser, logOut } = require('./controllers/UserController');
+const { 
+    addQuestion, 
+    addAnswer, 
+    getAllQuestions, 
+    getQuestion, 
+    like, 
+    unlike, 
+    dislike, 
+    undislike, 
+    likeAns, 
+    unlikeAns, 
+    dislikeAns, 
+    undislikeAns 
+} = require('./controllers/QuestionController');
+
+const { 
+    register, 
+    signIn, 
+    curUser, 
+    logOut 
+} = require('./controllers/UserController');
+
 const { render } = require('ejs');
 
 const app = express();
@@ -29,10 +49,11 @@ app.get('/', async (req, res, next) => {
     res.render(`${__dirname}/index.html`,  { data: { questions: questions, user: user.user }});
 });
 app.get('/question/:id', async (req, res, next) => {
-    //console.log(req.params.id);
     var data = await getQuestion(req, res, next);
     const user = await curUser(req, res, next);
-    console.log(data);
+    for (var i = 0; i < data[1].answers.length; i++) {
+        console.log(data[1].answers[i]);
+    }
     if (data[0]) {
         res.render(`${__dirname}/question.html`,  { data: { question: data[1], user: user.user }});
     }
@@ -62,6 +83,23 @@ app.post('/undislike/:id', async (req, res, next) => {
     res.send('complete undislike');
 });
 
+app.post('/likeAns/:id', async (req, res, next) => {
+    await likeAns(req, res, next);
+    res.send('complete like');
+});
+app.post('/unlikeAns/:id', async (req, res, next) => {
+    await unlikeAns(req, res, next);
+    res.send('complete unlike');
+});
+app.post('/dislikeAns/:id', async (req, res, next) => {
+    await dislikeAns(req, res, next);
+    res.send('complete dislike');
+});
+app.post('/undislikeAns/:id', async (req, res, next) => {
+    await undislikeAns(req, res, next);
+    res.send('complete undislike');
+});
+
 
 app.post('/signup', async(req, res, next) => {
     const data = await register(req, res, next);
@@ -78,6 +116,9 @@ app.post('/logout', async(req, res, next) => {
 
 app.post('/ask', async(req, res, next) => {
     addQuestion(req, res, next);
+});
+app.post('/answer', async(req, res, next) => {
+    addAnswer(req, res, next);
 });
 
 app.listen(config.port, () => console.log('App is listening on url http://localhost:' + config.port));

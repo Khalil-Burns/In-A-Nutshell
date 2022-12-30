@@ -3,6 +3,7 @@ const firestore = firebase.firestore();
 const FieldValue = require('firebase-admin').firestore.FieldValue;
 
 const Question = require('../models/Question');
+const Answer = require('../models/Answer');
 
 const addQuestion = async (req, res, next) => {
     try {
@@ -17,10 +18,10 @@ const addQuestion = async (req, res, next) => {
             'user': req.body.user,
             'usersLiked': {
                 [id]: 1
-            },
-            'answers': []
+            }
         };
-        await firestore.collection('questions').doc().set(data);
+        const doc = await firestore.collection('questions').add(data);
+        //await firestore.collection('questions').doc(doc.id).collection('answers').doc().set({});
         //res.send('Record saved successfully');
     }
     catch (error) {
@@ -39,10 +40,11 @@ const addAnswer = async (req, res, next) => {
             'title': req.body.title,
             'answer': req.body.answer,
             'usersLiked': {
-                [req.body.user.uid]: 1
+                [req.body.user.userID]: 1
             }
         };
-        await firestore.collection('questions').doc(req.body.questionID).update(data);
+        //await firestore.collection('questions').doc(req.body.questionID).update("answers", FieldValue.arrayUnion(answerData));
+        await firestore.collection('questions').doc(req.body.questionID).collection('answers').add(answerData);
         //res.send('Record saved successfully');
     }
     catch (error) {
@@ -69,9 +71,9 @@ const getAllQuestions = async (req, res, next) => {
                 doc.data().question,
                 doc.data().tags,
                 doc.data().text,
-                doc.data().usersLiked,
-                doc.data().answers
+                doc.data().usersLiked
             );
+            //console.log(doc.collection('answers').get());
             questionsArray.push(question);
         });
         return(questionsArray);
@@ -81,11 +83,41 @@ const getAllQuestions = async (req, res, next) => {
         //res.status(400).send(error.message);
     }
 };
+const getAllAnswers = async (data) => {
+    try {
+        const answersArray = [];
+        if (data.empty) {
+            //res.status(404).send('No user record found');
+            return([]);
+        }
+        data.forEach(doc => {
+            const answer = new Answer(
+                doc.id,
+                doc.data().likes,
+                doc.data().dislikes,
+                doc.data().wordCnt,
+                doc.data().title,
+                doc.data().answer,
+                doc.data().usersLiked
+            );
+            //console.log(doc.collection('answers').get());
+            answersArray.push(answer);
+        });
+        return(answersArray);
+    }
+    catch (error) {
+        console.log(error.message);
+        //res.status(400).send(error.message);
+    }
+};
+
 const getQuestion = async (req, res, next) => {
     var output = [false, 'Question not found!'];
     try {
         const id = req.params.id;
-        const data = await firestore.collection('questions').doc(id).get();
+        const question = firestore.collection('questions').doc(id)
+        const data = await question.get();
+        const dataAns = await question.collection('answers').get();
         if(data.exists) {
             const question = new Question(
                 data.id,
@@ -96,7 +128,7 @@ const getQuestion = async (req, res, next) => {
                 data.data().tags,
                 data.data().text,
                 data.data().usersLiked,
-                data.data().answers
+                await getAllAnswers(dataAns)
             );
             output = [true, question];
         }
@@ -217,6 +249,54 @@ const undislike = async (req, res, next) => {
     }
 }
 
+const likeAns = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`likes`, FieldValue.increment(1));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`dislikes`, FieldValue.increment(-req.body.amount));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`usersLiked.${req.body.userID}`, 1);
+    }
+    catch (error) {
+        return(error);
+    }
+}
+const unlikeAns = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`likes`, FieldValue.increment(-1));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`usersLiked.${req.body.userID}`, 0);
+    }
+    catch (error) {
+        return(error);
+    }
+}
+const dislikeAns = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`dislikes`, FieldValue.increment(1));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`likes`, FieldValue.increment(-req.body.amount));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`usersLiked.${req.body.userID}`, 2);
+    }
+    catch (error) {
+        console.log(error);
+        return(error);
+    }
+}
+const undislikeAns = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`dislikes`, FieldValue.increment(-1));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`usersLiked.${req.body.userID}`, 0);
+    }
+    catch (error) {
+        return(error);
+    }
+}
+
 //helper function
 function jsonConcat(o1, o2) {
     for (var key in o2) {
@@ -227,10 +307,15 @@ function jsonConcat(o1, o2) {
 
 module.exports = {
     addQuestion,
+    addAnswer,
     getAllQuestions,
     getQuestion,
     like,
     unlike,
     dislike,
-    undislike
+    undislike,
+    likeAns,
+    unlikeAns,
+    dislikeAns,
+    undislikeAns
 }

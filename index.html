@@ -156,78 +156,78 @@
     <div class="questions">
       <% for(var idx = 0; idx < data.questions.length; idx++) { %>
         <div class="question">
-            <table>
-              <tr>
-                <td>
-                  <% if (data.user) { %>
-                    <button class="like" id="like-<%- data.questions[idx].id %>" onclick="preLike('<%- data.questions[idx].id %>')"
-                      <% if(data.questions[idx].usersLiked[data.user.uid] == 1) { %>
-                        style="background-color: red;"
-                      <% } %>
-                    >
-                      <p>
-                        <%- data.questions[idx].likes %>
-                      </p> ^
-                      <script>
-                        function preLike(id) {
-                          if (!(likes[id] == 1)) {
-                            var amount = 0;
-                            if (likes[id] == 2) {
-                              amount = 1;
-                            }
-                            like(id, amount);
-                            likes[id] = 1;
+          <table>
+            <tr>
+              <td>
+                <% if (data.user) { %>
+                  <button class="like" id="like-<%- data.questions[idx].id %>" onclick="preLike('<%- data.questions[idx].id %>')"
+                    <% if(data.questions[idx].usersLiked[data.user.uid] == 1) { %>
+                      style="background-color: red;"
+                    <% } %>
+                  >
+                    <p>
+                      <%- data.questions[idx].likes %>
+                    </p> ^
+                    <script>
+                      function preLike(id) {
+                        if (!(likes[id] == 1)) {
+                          var amount = 0;
+                          if (likes[id] == 2) {
+                            amount = 1;
                           }
-                          else {
-                            unlike(id);
-                            likes[id] = 0;
-                          }
+                          like(id, amount);
+                          likes[id] = 1;
                         }
-                      </script>
-                    </button>
-
-                    <button class="dislike" id="dislike-<%- data.questions[idx].id %>" onclick="preDislike('<%- data.questions[idx].id %>')"
-                      <% if(data.questions[idx].usersLiked[data.user.uid] == 2) { %>
-                        style="background-color: red;"
-                      <% } %>
-                    >
-                      <p>
-                        <%- data.questions[idx].dislikes %>
-                      </p> v
-                      <script>
-                        function preDislike(id) {
-                          if (likes[id] != 2) {
-                            var amount = 0;
-                            if (likes[id] == 1) {
-                              amount = 1;
-                            }
-                            dislike(id, amount);
-                            likes[id] = 2;
-                          }
-                          else {
-                            undislike(id);
-                            likes[id] = 0;
-                          }
+                        else {
+                          unlike(id);
+                          likes[id] = 0;
                         }
-                      </script>
-                    </button>
-
-                  <% } else { %>
-                    <p class="like">
-                      <%- data.questions[idx].likes %> ^
-                    </p>
-                    <p class="dislike">
-                      <%- data.questions[idx].dislikes %> v
-                    </p>
-                  <% } %>
-                </td>
-                <td>
-                   <button onclick="location.href = '/question/<%- data.questions[idx].id %>'" class="questionButton">
-                    <strong><%- data.questions[idx].question %></strong>
+                      }
+                    </script>
                   </button>
-                </td>
-              </tr>
-            </table>
+
+                  <button class="dislike" id="dislike-<%- data.questions[idx].id %>" onclick="preDislike('<%- data.questions[idx].id %>')"
+                    <% if(data.questions[idx].usersLiked[data.user.uid] == 2) { %>
+                      style="background-color: red;"
+                    <% } %>
+                  >
+                    <p>
+                      <%- data.questions[idx].dislikes %>
+                    </p> v
+                    <script>
+                      function preDislike(id) {
+                        if (likes[id] != 2) {
+                          var amount = 0;
+                          if (likes[id] == 1) {
+                            amount = 1;
+                          }
+                          dislike(id, amount);
+                          likes[id] = 2;
+                        }
+                        else {
+                          undislike(id);
+                          likes[id] = 0;
+                        }
+                      }
+                    </script>
+                  </button>
+
+                <% } else { %>
+                  <p class="like">
+                    <%- data.questions[idx].likes %> ^
+                  </p>
+                  <p class="dislike">
+                    <%- data.questions[idx].dislikes %> v
+                  </p>
+                <% } %>
+              </td>
+              <td>
+                <button onclick="location.href = '/question/<%- data.questions[idx].id %>'" class="questionButton">
+                  <strong><%- data.questions[idx].question %></strong>
+                </button>
+              </td>
+            </tr>
+          </table>
           <% if (idx < data.questions.length - 1) { %>
             <hr>
           <% } %>
