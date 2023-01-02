@@ -74,6 +74,7 @@ function generateQuestions() {
       userID: questionsArray[idx].user.userID,
       displayName: questionsArray[idx].user.displayName
     }
+    
     var d = new Date(parseInt(questionsArray[idx].timeCreated, 10));
     subText.timeCreated = d.toString();
     subText.innerHTML = `Posted by <a href="/user/${subText.user.userID}">${subText.user.displayName}</a> on ${subText.timeCreated}`
