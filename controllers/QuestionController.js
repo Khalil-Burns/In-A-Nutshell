@@ -7,25 +7,27 @@ const Answer = require('../models/Answer');
 
 const addQuestion = async (req, res, next) => {
     try {
+        console.log(req.body);
         const id = req.body.user.userID;
         const data = {
+            'user': req.body.user,
             'likes': 1,
             'dislikes': 0,
             'wordCnt': req.body.wordCnt,
             'question': req.body.question,
             'tags': '',
             'text': req.body.text,
-            'user': req.body.user,
             'usersLiked': {
                 [id]: 1
-            }
+            },
+            'timeCreated': Date.now()
         };
         const doc = await firestore.collection('questions').add(data);
         //await firestore.collection('questions').doc(doc.id).collection('answers').doc().set({});
         //res.send('Record saved successfully');
     }
     catch (error) {
-        console.log(error.message);
+        console.log('Add question: ' + error.message);
         //res.status(400).send(error.message);
     }
 };
@@ -33,15 +35,16 @@ const addAnswer = async (req, res, next) => {
     try {
         const id = req.body.questionID;
         const answerData = {
+            'user': req.body.user,
             'likes': 1,
             'dislikes': 0,
             'wordCnt': req.body.wordCnt,
-            'user': req.body.user,
             'title': req.body.title,
             'answer': req.body.answer,
             'usersLiked': {
                 [req.body.user.userID]: 1
-            }
+            },
+            'timeCreated': Date.now()
         };
         //await firestore.collection('questions').doc(req.body.questionID).update("answers", FieldValue.arrayUnion(answerData));
         await firestore.collection('questions').doc(req.body.questionID).collection('answers').add(answerData);
@@ -55,7 +58,7 @@ const addAnswer = async (req, res, next) => {
 
 const getAllQuestions = async (req, res, next) => {
     try {
-        const questions = await firestore.collection('questions');
+        const questions = await firestore.collection('questions').orderBy("timeCreated", "desc");
         const data = await questions.get();
         const questionsArray = [];
         if (data.empty) {
@@ -65,13 +68,16 @@ const getAllQuestions = async (req, res, next) => {
         data.forEach(doc => {
             const question = new Question(
                 doc.id,
+                doc.data().user,
                 doc.data().likes,
                 doc.data().dislikes,
                 doc.data().wordCnt,
                 doc.data().question,
                 doc.data().tags,
                 doc.data().text,
-                doc.data().usersLiked
+                doc.data().usersLiked,
+                undefined,
+                doc.data().timeCreated
             );
             //console.log(doc.collection('answers').get());
             questionsArray.push(question);
@@ -93,12 +99,14 @@ const getAllAnswers = async (data) => {
         data.forEach(doc => {
             const answer = new Answer(
                 doc.id,
+                doc.data().user,
                 doc.data().likes,
                 doc.data().dislikes,
                 doc.data().wordCnt,
                 doc.data().title,
                 doc.data().answer,
-                doc.data().usersLiked
+                doc.data().usersLiked,
+                doc.data().timeCreated
             );
             //console.log(doc.collection('answers').get());
             answersArray.push(answer);
@@ -117,10 +125,11 @@ const getQuestion = async (req, res, next) => {
         const id = req.params.id;
         const question = firestore.collection('questions').doc(id)
         const data = await question.get();
-        const dataAns = await question.collection('answers').get();
+        const dataAns = await question.collection('answers').orderBy("likes", "desc").get();
         if(data.exists) {
             const question = new Question(
                 data.id,
+                data.data().user,
                 data.data().likes,
                 data.data().dislikes,
                 data.data().wordCnt,
@@ -128,7 +137,8 @@ const getQuestion = async (req, res, next) => {
                 data.data().tags,
                 data.data().text,
                 data.data().usersLiked,
-                await getAllAnswers(dataAns)
+                await getAllAnswers(dataAns),
+                data.data().timeCreated
             );
             output = [true, question];
         }

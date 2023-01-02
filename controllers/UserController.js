@@ -22,15 +22,24 @@ async function curUser(req, res, next) {
       const token = await adminAuth.createCustomToken(
         auth.currentUser.uid
       );
-      jsonConcat(output, { user: auth.currentUser });
-      const user = await firestore.doc(`users/${auth.currentUser.uid}`).get();//.set({ secureNote });
+      const userData = await firestore.collection('users').doc(auth.currentUser.uid).get();
+
+      jsonConcat(output, { user: {
+        userID: auth.currentUser.uid,
+        userEmail: auth.currentUser.email,
+        notifications: userData.data().notifications,
+        displayName: userData.data().displayName
+      }
+    });
     }
     else {
       //output = { user: 'null'};
     }
   } catch (err) {
     var { code } = err;
-    code = code.replace('auth/', '');
+    
+    console.log(err);
+    //code = code.replace('auth/', '');
     jsonConcat(output, { 'error': code });
   }
   return(output);
@@ -53,9 +62,18 @@ async function register(req, res, next) {
     );
     const user = await firestore.doc(`users/${credential.user.uid}`).get();//.set({ secureNote });
 
-    await firestore.collection('users').doc(credential.user.uid).set({'notifications': {}});
+    await firestore.collection('users').doc(credential.user.uid).set({
+      'notifications': {},
+      'displayName': req.body.username
+    });
 
-    jsonConcat(output, { user: credential.user });
+    jsonConcat(output, { user: {
+        userID: credential.user.uid,
+        userEmail: email,
+        notifications: {},
+        displayName: req.body.username
+      }
+    });
   } catch (err) {
     var { code } = err;
     console.log(`error: ${code}`);
@@ -82,12 +100,19 @@ async function signIn(req, res, next) {
     const token = await adminAuth.createCustomToken(
       credential.user.uid
     );
-    const user = await firestore.doc(`users/${credential.user.uid}`).get();//.set({ secureNote });
 
-    jsonConcat(output, { user: credential.user });
+    const userData = await firestore.collection('users').doc(credential.user.uid).get();
+
+    jsonConcat(output, { user: {
+      userID: credential.user.uid,
+      userEmail: email,
+      notifications: userData.data().notifications,
+      username: userData.data().displayName
+    }
+  });
   } catch (err) {
     var { code } = err;
-    code = code.replace('auth/', '');
+    //code = code.replace('auth/', '');
     jsonConcat(output, { 'error': code });
   }
 

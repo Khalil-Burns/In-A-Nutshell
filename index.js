@@ -116,9 +116,11 @@ app.post('/logout', async(req, res, next) => {
 
 app.post('/ask', async(req, res, next) => {
     addQuestion(req, res, next);
+    res.send('success');
 });
 app.post('/answer', async(req, res, next) => {
     addAnswer(req, res, next);
+    res.send('success')
 });
 
 app.listen(config.port, () => console.log('App is listening on url http://localhost:' + config.port));

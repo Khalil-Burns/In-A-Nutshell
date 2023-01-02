@@ -1,11 +1,92 @@
-var closeQuestionPopup = document.getElementById("closeQuestion");
-var submitQuestionPopup = document.getElementById("submitPopup");
+function generateQuestions() {
+  var questions = document.getElementById("questions");
+  questions.innerHTML = "";
+  for (var idx = 0; idx < questionsArray.length; idx++) {
 
-var closeSignInPopup = document.getElementById("closeSignIn");
-var signInPopup = document.getElementById("signInPopup");
+    var question = document.createElement('div');
+    question.setAttribute("class", "question");
+    questions.appendChild(question);
 
-var closeSignUpPopup = document.getElementById("closeSignUp");
-var signUpPopup = document.getElementById("signUpPopup");
+    var table = document.createElement('table');
+    question.appendChild(table);
+
+    var tableRow = document.createElement('tr');
+    table.appendChild(tableRow);
+
+    var tdButtons = document.createElement('td');
+    tableRow.appendChild(tdButtons);
+
+    var tdText = document.createElement('td');
+    tableRow.appendChild(tdText);
+
+    if (isUser) {
+      var bLike = document.createElement('button');
+      bLike.setAttribute("class", "like");
+      bLike.questionID = questionsArray[idx].id;
+      bLike.setAttribute("id", "like-" + bLike.questionID);
+      if (likes[questionsArray[idx].id] == 1) {
+        bLike.style.backgroundColor = "grey";
+      }
+      bLike.innerHTML = `<p>${questionsArray[idx].likes}</p> ^`;
+      tdButtons.appendChild(bLike);
+
+      var bDislike = document.createElement('button');
+      bDislike.setAttribute("class", "dislike");
+      bDislike.questionID = questionsArray[idx].id;
+      bDislike.setAttribute("id", "dislike-" + bDislike.questionID);
+      if (likes[questionsArray[idx].id] == 2) {
+        bDislike.style.backgroundColor = "grey";
+      }
+      bDislike.innerHTML = `v <p>${questionsArray[idx].dislikes}</p>`;
+      tdButtons.appendChild(bDislike);
+
+      bLike.onclick = function() {
+        preLike(this.questionID);
+      }
+      bDislike.onclick = function() {
+        preDislike(this.questionID);
+      }
+    }
+    else {
+      var bLike = document.createElement('p');
+      bLike.setAttribute("class", "like");
+      bLike.innerHTML = `${questionsArray[idx].likes} ^`
+      tdButtons.appendChild(bLike);
+
+      var bDislike = document.createElement('p');
+      bDislike.setAttribute("class", "dislike");
+      bDislike.innerHTML = `${questionsArray[idx].dislikes} v`
+      tdButtons.appendChild(bDislike);
+    }
+
+    var text = document.createElement('button');
+    text.setAttribute("class", "questionButton");
+    text.questionID = questionsArray[idx].id;
+    text.onclick = function() {
+      location.href = "/question/" + this.questionID;
+    };
+    text.innerHTML = `<strong>${questionsArray[idx].question}</strong>`;
+    tdText.appendChild(text);
+
+    var subText = document.createElement('p');
+    subText.setAttribute("class", "subText");
+    subText.user = {
+      userID: questionsArray[idx].user.userID,
+      displayName: questionsArray[idx].user.displayName
+    }
+    var d = new Date(parseInt(questionsArray[idx].timeCreated, 10));
+    subText.timeCreated = d.toString();
+    subText.innerHTML = `Posted by <a href="/user/${subText.user.userID}">${subText.user.displayName}</a> on ${subText.timeCreated}`
+    subText.style.fontSize = "small";
+
+    tdText.appendChild(subText);
+
+    if (idx < questionsArray.length - 1) {
+      var hr = document.createElement('hr');
+      question.appendChild(hr);
+    }
+  }
+}
 
 function dropdownOnClick() {
   document.getElementById("userDropdown").classList.toggle("show");
@@ -25,6 +106,9 @@ function post() {
   var wordCnt = tinymce.activeEditor.plugins.wordcount.getCount();
   tinymce.get('questionField').setContent('');
 
+  submitQuestionPopup.style.display = "block";
+  $("#questionPosted > p").text("Loading...");
+
   $.post("/ask",
   {
     question: question,
@@ -32,124 +116,53 @@ function post() {
     wordCnt: wordCnt,
     user: {
       userID: userID,
-      userEmail: userEmail
+      userEmail: userEmail,
+      displayName: displayName,
     }
-  });
-
-  submitQuestionPopup.style.display = "block";
-  $("#questionPosted > p").text("Question posted!");
-};
-
-function loginPopup() {
-  var error = document.getElementById("signInError");
-
-  signInPopup.style.display = "block";
-  error.innerHTML = "";
-};
-function signupPopup() {
-  var error = document.getElementById("signUpError");
-
-  signUpPopup.style.display = "block";
-  error.innerHTML = "";
-};
-
-function login() {
-  var username = document.getElementById("signInUsername").value;
-  var email = document.getElementById("signInEmail").value;
-  var password = document.getElementById("signInPassword").value;
-  var error = document.getElementById("signInError");
-  error.innerHTML = "";
-
-  if (!username) {
-    //$("#signInError > p").text("You didn't type in a username!");
-    error.innerHTML = "You didn't type in a username!";
-    return;
-  }
-  if (!email) {
-    error.innerHTML = "You didn't type in a email!";
-    return;
-  }
-  if (!password) {
-    error.innerHTML = "You didn't type in a password!";
-    return;
-  }
-
-  $.post("/signin",
-  {
-    username: username,
-    email: email,
-    password: password
   }, function(data, status) {
-    if (!data.error) {
-      console.log(data);
-      window.location.replace("/");
-      signInPopup.style.display = "none";
-      submitQuestionPopup.style.display = "block";
-      $("#questionPosted > p").text(`Signed in as ${username}!`);
-    }
-    else {
-      error.innerHTML = data.error;
-    }
+    window.location.replace("/");
+    submitQuestionPopup.style.display = "block";
+    $("#questionPosted > p").text("Question posted!");
   });
+};
 
-  error.innerHTML = "Loading...";
-}
-
-function signup() {
-  var username = document.getElementById("signUpUsername").value;
-  var email = document.getElementById("signUpEmail").value;
-  var password = document.getElementById("signUpPassword").value;
-  var error = document.getElementById("signUpError");
-  error.innerHTML = "";
-
-  if (!username) {
-    //$("#signInError > p").text("You didn't type in a username!");
-    error.innerHTML = "You didn't type in a username!";
-    return;
-  }
-  if (!email) {
-    error.innerHTML = "You didn't type in a email!";
-    return;
-  }
-  if (!password) {
-    error.innerHTML = "You didn't type in a password!";
-    return;
-  }
-
-  $.post("/signup",
-  {
-    username: username,
-    email: email,
-    password: password
-  }, function(data, status) {
-    if (!data.error) {
-      window.location.replace("/");
-      signUpPopup.style.display = "none";
-      submitQuestionPopup.style.display = "block";
-      $("#questionPosted > p").text(`User created as ${username}!`);
+function preLike(id) {
+  if (!(likes[id] == 1)) {
+    var amount = 0;
+    if (likes[id] == 2) {
+      amount = 1;
     }
-    else {
-      error.innerHTML = data.error;
-    }
-  });
-
-  error.innerHTML = "Loading...";
+    like(id, amount);
+    likes[id] = 1;
+  }
+  else {
+    unlike(id);
+    likes[id] = 0;
+  }
 }
-
-function logout() {
-  $.post("/logout");
+function preDislike(id) {
+  if (likes[id] != 2) {
+    var amount = 0;
+    if (likes[id] == 1) {
+      amount = 1;
+    }
+    dislike(id, amount);
+    likes[id] = 2;
+  }
+  else {
+    undislike(id);
+    likes[id] = 0;
+  }
 }
 
 function like(id, amount) {
   var like = document.getElementById(`like-${id}`);
   var likes = like.getElementsByTagName('p')[0];
-  console.log(parseInt(likes.innerHTML, 10));
   likes.innerHTML = parseInt(likes.innerHTML, 10) + 1;
-  like.style = 'background-color: red';
+  like.style = 'background-color: grey';
 
   var dislike = document.getElementById(`dislike-${id}`);
   var dislikes = dislike.getElementsByTagName('p')[0];
-  console.log(parseInt(dislikes.innerHTML, 10));
   dislikes.innerHTML = parseInt(dislikes.innerHTML, 10) - amount;
   dislike.style.removeProperty('background-color');
 
@@ -163,7 +176,6 @@ function like(id, amount) {
 function unlike(id) {
   var like = document.getElementById(`like-${id}`);
   var likes = like.getElementsByTagName('p')[0];
-  console.log(parseInt(likes.innerHTML, 10));
   likes.innerHTML = parseInt(likes.innerHTML, 10) - 1;
   like.style.removeProperty('background-color');
 
@@ -178,13 +190,11 @@ function unlike(id) {
 function dislike(id, amount) {
   var dislike = document.getElementById(`dislike-${id}`);
   var dislikes = dislike.getElementsByTagName('p')[0];
-  console.log(parseInt(dislikes.innerHTML, 10));
   dislikes.innerHTML = parseInt(dislikes.innerHTML, 10) + 1;
-  dislike.style = 'background-color: red';
+  dislike.style = 'background-color: grey';
 
   var like = document.getElementById(`like-${id}`);
   var likes = like.getElementsByTagName('p')[0];
-  console.log(parseInt(likes.innerHTML, 10));
   likes.innerHTML = parseInt(likes.innerHTML, 10) - amount;
   like.style.removeProperty('background-color');
 
@@ -198,7 +208,6 @@ function dislike(id, amount) {
 function undislike(id) {
   var dislike = document.getElementById(`dislike-${id}`);
   var dislikes = dislike.getElementsByTagName('p')[0];
-  console.log(parseInt(dislikes.innerHTML, 10));
   dislikes.innerHTML = parseInt(dislikes.innerHTML, 10) - 1;
   dislike.style.removeProperty('background-color');
 
@@ -210,37 +219,45 @@ function undislike(id) {
   });
 }
 
-closeQuestionPopup.onclick = function() {
-  submitQuestionPopup.style.display = "none";
+function sort(array, sortBy, isAsc) {
+  quicksort(array, 0, array.length - 1, sortBy, isAsc);
+  return(array);
 }
-closeSignInPopup.onclick = function() {
-  signInPopup.style.display = "none";
+function quicksort(array, left, right, sortBy, isAsc) {
+  var mid = partition(array, left, right, sortBy, isAsc);
+  if (left < mid - 1) {
+      quicksort(array, left, mid - 1, sortBy, isAsc);
+  }
+  if (right > mid) {
+      quicksort(array, mid, right, sortBy, isAsc);
+  }
 }
-closeSignUpPopup.onclick = function() {
-  signUpPopup.style.display = "none";
-}
-
-window.onclick = function(event) {
-  if (!event.target.matches('.dropdownButton')) {
-    var dropdowns = document.getElementsByClassName("dropdownOnClick");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
+function partition(array, left, right, sortBy, isAsc) {
+  var pivot = array[(left + right) >>> 1][sortBy];
+  while (left <= right) {
+    if (isAsc == "true") {
+      while (array[left][sortBy] < pivot) { 
+        left++; 
+      }
+      while (array[right][sortBy] > pivot) { 
+        right--; 
       }
     }
+    else {
+      while (array[left][sortBy] > pivot) { 
+        left++; 
+      }
+      while (array[right][sortBy] < pivot) { 
+        right--; 
+      }
+    }
+    if (left <= right) {
+        var temp = array[left];
+        array[left] = array[right];
+        array[right] = temp;
+        left++;
+        right--;
+    }
   }
-}
-
-window.onclick = function(event) {
-  if (event.target == submitQuestionPopup) {
-    submitQuestionPopup.style.display = "none";
-  }
-  else if (event.target == signInPopup) {
-    signInPopup.style.display = "none";
-  }
-  else if (event.target == signUpPopup) {
-    signUpPopup.style.display = "none";
-  }
+  return left;
 }

@@ -5,28 +5,53 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>InANutshell</title>
+  <script>
+    var questionsArray = [];
+  </script>
   <link href="/css/style.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tiny.cloud/1/l8zjrawn1dbffyt6rbg04a479f4n9h183yx86efcd3lvugqk/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="/script/scriptIndex.js"></script>
+  <script src="/script/script.js"></script>
 </head>
 
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <% if (data.user) { %>
-      <script>
-        var userID = '<%- data.user.uid %>';
-        var userEmail = '<%- data.user.email %>';
-        var userPassword = '<%- data.user.password %>';
-        var questions = '<%- data.questions %>';
+
+    <script>
+      var isUser = false;
+      
+      '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
+        questionsArray['<%- idx %>'] = {
+          'id': '<%- data.questions[idx].id %>',
+          'likes': '<%- data.questions[idx].likes %>',
+          'dislikes': '<%- data.questions[idx].dislikes %>',
+          'question': '<%- data.questions[idx].question %>',
+          'timeCreated': '<%- data.questions[idx].timeCreated %>',
+          'user': {
+            'userID': '<%- data.questions[idx].user.uid %>',
+            'displayName': '<%- data.questions[idx].user.displayName %>'
+          }
+        };
+      '<% } %>'
+
+      '<% if (data.user) { %>'
+        isUser = true;
+        var userID = '<%- data.user.userID %>';
+        var userEmail = '<%- data.user.userEmail %>';
+        var displayName = '<%- data.user.displayName %>';
+
         var likes = {};
         '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
 
           '<% if (data.questions[idx].usersLiked[data.user.uid]) { %>'
             likes['<%- data.questions[idx].id %>'] = '<%- data.questions[idx].usersLiked[data.user.uid] %>';
           '<% } %>'
+
         '<% } %>'
-      </script>
-    <% } %>
+
+      '<% } %>'
+    </script>
     
     <div class="topBar">
         <button onclick="location.href = '/'" class="homeButton">
@@ -49,7 +74,7 @@
         <% if (data.user) {%>
           <div class="dropdown">
             <button onclick="dropdownOnClick()" class="dropdownButton" id="user">
-              <%- data.user.email %>
+              <%- data.user.displayName %>
             </button>
             <div id="userDropdown" class="dropdownOnClick">
               <a href="">Settings</a>
@@ -128,12 +153,10 @@
     <div id="signInPopup" class="popup">
       <div id="signInUI">
         <span class="close" id="closeSignIn">&times;</span>
-        <label for="username">Username:</label><br>
-        <input type="text" id="signInUsername" name="username" value=""><br>
         <label for="email">Email:</label><br>
         <input type="text" id="signInEmail" name="email" value=""><br>
         <label for="password">Password:</label><br>
-        <input type="text" id="signInPassword" name="password" value=""><br><br>
+        <input type="password" id="signInPassword" name="password" value=""><br><br>
         <input type="button" value="Submit" onclick="login()">
         <p id="signInError">asdf</p>
       </div>
@@ -146,15 +169,25 @@
         <label for="email">Email:</label><br>
         <input type="text" id="signUpEmail" name="email" value=""><br>
         <label for="password">Password:</label><br>
-        <input type="text" id="signUpPassword" name="password" value=""><br><br>
+        <input type="password" id="signUpPassword" name="password" value=""><br><br>
         <input type="button" value="Submit" onclick="signup()">
         <p id="signUpError">asdf</p>
       </div>
     </div>
     <div class="notification"></div>
-    <div class="questionSort"></div>
-    <div class="questions">
-      <% for(var idx = 0; idx < data.questions.length; idx++) { %>
+    <div class="questionSort">
+      <select id="sortQuestions">
+        <option value="timeCreated">Date Posted</option>
+        <option value="likes">Likes</option>
+        <option value="dislikes">Dislikes</option>
+      </select>
+      <select id="sortAscending">
+        <option value="false">Descending</option>
+        <option value="true">Ascending</option>
+      </select>
+    </div>
+    <div id="questions">
+      <!-- <% for(var idx = 0; idx < data.questions.length; idx++) { %>
         <div class="question">
           <table>
             <tr>
@@ -169,20 +202,7 @@
                       <%- data.questions[idx].likes %>
                     </p> ^
                     <script>
-                      function preLike(id) {
-                        if (!(likes[id] == 1)) {
-                          var amount = 0;
-                          if (likes[id] == 2) {
-                            amount = 1;
-                          }
-                          like(id, amount);
-                          likes[id] = 1;
-                        }
-                        else {
-                          unlike(id);
-                          likes[id] = 0;
-                        }
-                      }
+                      
                     </script>
                   </button>
 
@@ -195,20 +215,6 @@
                       <%- data.questions[idx].dislikes %>
                     </p> v
                     <script>
-                      function preDislike(id) {
-                        if (likes[id] != 2) {
-                          var amount = 0;
-                          if (likes[id] == 1) {
-                            amount = 1;
-                          }
-                          dislike(id, amount);
-                          likes[id] = 2;
-                        }
-                        else {
-                          undislike(id);
-                          likes[id] = 0;
-                        }
-                      }
                     </script>
                   </button>
 
@@ -231,11 +237,66 @@
           <% if (idx < data.questions.length - 1) { %>
             <hr>
           <% } %>
-        </div>
+        </div> -->
       <% } %>
     </div>
-    <script src="/script/scriptIndex.js"></script>
-    <script src="/script/script.js"></script>
+
+    <script>
+      var closeQuestionPopup = document.getElementById("closeQuestion");
+      var submitQuestionPopup = document.getElementById("submitPopup");
+
+      var closeSignInPopup = document.getElementById("closeSignIn");
+      var signInPopup = document.getElementById("signInPopup");
+
+      var closeSignUpPopup = document.getElementById("closeSignUp");
+      var signUpPopup = document.getElementById("signUpPopup");
+
+      var sortQuesSelect = document.getElementById('sortQuestions');
+      var sortAscSelect = document.getElementById('sortAscending');
+
+      sortQuesSelect.onchange = (event) => {
+        questionsArray = sort(questionsArray, event.target.value, sortAscSelect.value);
+        generateQuestions();
+      }
+      sortAscSelect.onchange = (event) => {
+        questionsArray = sort(questionsArray, sortQuesSelect.value, event.target.value);
+        generateQuestions();
+      }
+
+      closeQuestionPopup.onclick = function() {
+        submitQuestionPopup.style.display = "none";
+      }
+      closeSignInPopup.onclick = function() {
+        signInPopup.style.display = "none";
+      }
+      closeSignUpPopup.onclick = function() {
+        signUpPopup.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == submitQuestionPopup) {
+          submitQuestionPopup.style.display = "none";
+        }
+        if (event.target == signInPopup) {
+          signInPopup.style.display = "none";
+        }
+        if (event.target == signUpPopup) {
+          signUpPopup.style.display = "none";
+        }
+        if (!event.target.matches('.dropdownButton')) {
+          var dropdowns = document.getElementsByClassName("dropdownOnClick");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      }
+
+      generateQuestions();
+    </script>
 </body>
 
 </html>
