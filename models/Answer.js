@@ -1,12 +1,14 @@
 class Answer {
-    constructor(id, likes, dislikes, wordCnt, title, answer, usersLiked) {
+    constructor(id, user, likes, dislikes, wordCnt, title, answer, usersLiked, timeCreated) {
         this.id = id;
+        this.user = user;
         this.likes = likes;
         this.dislikes = dislikes;
         this.wordCnt = wordCnt;
         this.title = title;
         this.answer = answer;
         this.usersLiked = usersLiked;
+        this.timeCreated = timeCreated;
     }
 }
 
