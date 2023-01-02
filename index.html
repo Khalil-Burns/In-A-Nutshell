@@ -43,8 +43,8 @@
         var likes = {};
         '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
 
-          '<% if (data.questions[idx].usersLiked[data.user.uid]) { %>'
-            likes['<%- data.questions[idx].id %>'] = '<%- data.questions[idx].usersLiked[data.user.uid] %>';
+          '<% if (data.questions[idx].usersLiked[data.user.userID]) { %>'
+            likes['<%- data.questions[idx].id %>'] = '<%- data.questions[idx].usersLiked[data.user.userID] %>';
           '<% } %>'
 
         '<% } %>'
