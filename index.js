@@ -64,22 +64,18 @@ app.get('/question/:id', async (req, res, next) => {
 
 app.post('/like/:id', async (req, res, next) => {
     await like(req, res, next);
-    console.log('complete like');
     res.send('complete like');
 });
 app.post('/unlike/:id', async (req, res, next) => {
     await unlike(req, res, next);
-    console.log('complete unlike');
     res.send('complete unlike');
 });
 app.post('/dislike/:id', async (req, res, next) => {
     await dislike(req, res, next);
-    console.log('complete dislike');
     res.send('complete dislike');
 });
 app.post('/undislike/:id', async (req, res, next) => {
     await undislike(req, res, next);
-    console.log('complete undislike');
     res.send('complete undislike');
 });
 

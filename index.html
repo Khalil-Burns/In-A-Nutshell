@@ -5,9 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>InANutshell</title>
-  <script>
-    var questionsArray = [];
-  </script>
   <link href="/css/style.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tiny.cloud/1/l8zjrawn1dbffyt6rbg04a479f4n9h183yx86efcd3lvugqk/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -19,6 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script>
+      
+      var questionsArray = [];
       var isUser = false;
       
       '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
@@ -174,7 +173,9 @@
         <p id="signUpError">asdf</p>
       </div>
     </div>
-    <div class="notification"></div>
+    <div class="notification">
+      <h2>Notifications:</h2>
+    </div>
     <div class="questionSort">
       <select id="sortQuestions">
         <option value="timeCreated">Date Posted</option>
@@ -182,8 +183,8 @@
         <option value="dislikes">Dislikes</option>
       </select>
       <select id="sortAscending">
-        <option value="false">Descending</option>
-        <option value="true">Ascending</option>
+        <option value="false">High to low</option>
+        <option value="true">Low to high</option>
       </select>
     </div>
     <div id="questions">
