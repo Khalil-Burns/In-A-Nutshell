@@ -83,3 +83,46 @@ function signup() {
 function logout() {
     $.post("/logout");
 }
+
+function sort(array, sortBy, isAsc) {
+    quicksort(array, 0, array.length - 1, sortBy, isAsc);
+    return(array);
+}
+function quicksort(array, left, right, sortBy, isAsc) {
+    var mid = partition(array, left, right, sortBy, isAsc);
+    if (left < mid - 1) {
+        quicksort(array, left, mid - 1, sortBy, isAsc);
+    }
+    if (right > mid) {
+        quicksort(array, mid, right, sortBy, isAsc);
+    }
+}
+function partition(array, left, right, sortBy, isAsc) {
+    var pivot = array[(left + right) >>> 1][sortBy];
+    while (left <= right) {
+        if (isAsc == "true") {
+            while (array[left][sortBy] < pivot) { 
+                left++; 
+            }
+            while (array[right][sortBy] > pivot) { 
+                right--; 
+            }
+        }
+        else {
+            while (array[left][sortBy] > pivot) { 
+                left++; 
+            }
+            while (array[right][sortBy] < pivot) { 
+                right--; 
+            }
+        }
+        if (left <= right) {
+            var temp = array[left];
+            array[left] = array[right];
+            array[right] = temp;
+            left++;
+            right--;
+        }
+    }
+    return left;
+}

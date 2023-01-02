@@ -125,7 +125,7 @@ const getQuestion = async (req, res, next) => {
         const id = req.params.id;
         const question = firestore.collection('questions').doc(id)
         const data = await question.get();
-        const dataAns = await question.collection('answers').orderBy("likes", "desc").get();
+        const dataAns = await question.collection('answers').orderBy("timeCreated", "desc").get();
         if(data.exists) {
             const question = new Question(
                 data.id,
