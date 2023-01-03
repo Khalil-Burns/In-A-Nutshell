@@ -40,6 +40,18 @@
         var userEmail = '<%- data.user.userEmail %>';
         var displayName = '<%- data.user.displayName %>';
 
+        var notificationsArray = [];
+        '<% for (var idx = 0; idx < data.user.notifications.length; idx++) { %>'
+
+          notificationsArray['<%- idx %>'] = {
+            'id': '<%- data.user.notifications[idx].id %>',
+            'img': '<%- data.user.notifications[idx].img %>',
+            'text': '<%- data.user.notifications[idx].text %>',
+            'timeCreated': '<%- data.user.notifications[idx].timeCreated %>'
+          }
+
+        '<% } %>'
+
         var likes = {};
         '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
 
@@ -173,8 +185,7 @@
         <p id="signUpError">asdf</p>
       </div>
     </div>
-    <div class="notification">
-      <h2>Notifications:</h2>
+    <div id="notifications">
     </div>
     <div class="questionSort">
       <select id="sortQuestions">
@@ -297,6 +308,10 @@
       }
 
       generateQuestions();
+
+      if (isUser) {
+        generateNotifications();
+      }
     </script>
 </body>
 

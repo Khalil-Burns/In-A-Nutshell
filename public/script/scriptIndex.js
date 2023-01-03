@@ -8,12 +8,15 @@ function generateQuestions() {
     questions.appendChild(question);
 
     var table = document.createElement('table');
+    table.style.width = "100%";
     question.appendChild(table);
 
     var tableRow = document.createElement('tr');
     table.appendChild(tableRow);
 
     var tdButtons = document.createElement('td');
+    tdButtons.style.width = "0%";
+    tdButtons.style.height = "0%";
     tableRow.appendChild(tdButtons);
 
     var tdText = document.createElement('td');
@@ -79,6 +82,7 @@ function generateQuestions() {
     subText.timeCreated = d.toString();
     subText.innerHTML = `Posted by <a href="/user/${subText.user.userID}">${subText.user.displayName}</a> on ${subText.timeCreated}`
     subText.style.fontSize = "small";
+    subText.style.textAlign = "right";
 
     tdText.appendChild(subText);
 

@@ -51,9 +51,6 @@ app.get('/', async (req, res, next) => {
 app.get('/question/:id', async (req, res, next) => {
     var data = await getQuestion(req, res, next);
     const user = await curUser(req, res, next);
-    for (var i = 0; i < data[1].answers.length; i++) {
-        console.log(data[1].answers[i]);
-    }
     if (data[0]) {
         res.render(`${__dirname}/question.html`,  { data: { question: data[1], user: user.user }});
     }

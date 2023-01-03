@@ -1,7 +1,9 @@
 class Notification {
-    constructor(img, text) {
+    constructor(id, img, text, timeCreated) {
+        this.id = id;
         this.img = img;
         this.text = text;
+        this.timeCreated = timeCreated;
     }
 }
 

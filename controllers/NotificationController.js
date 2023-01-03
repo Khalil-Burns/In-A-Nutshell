@@ -3,27 +3,51 @@ const firestore = firebase.firestore();
 
 const Notification = require('../models/Notification');
 
-// const createNotification = async (req, res, next) => {
-//     try {
-//         const userId = req.body.user.userID;
-//         const data = {
-//             'likes': 1,
-//             'dislikes': 0,
-//             'wordCnt': req.body.wordCnt,
-//             'question': req.body.question,
-//             'tags': '',
-//             'text': req.body.text,
-//             'user': req.body.user,
-//             'usersLiked': {
-//                 [id]: true
-//             },
-//             'usersDisliked': {}
-//         };
-//         await firestore.collection('notifications').doc().set(data);
-//         //res.send('Record saved successfully');
-//     }
-//     catch (error) {
-//         console.log(error.message);
-//         //res.status(400).send(error.message);
-//     }
-// }
+const createNotification = async (id, text, img) => {
+    try {
+        const userID = id;
+        const data = {
+            'img': img,
+            'text': text,
+            'timeCreated': Date.now()
+        };
+        await firestore.collection('users').doc(userID).collection('notifications').add(data);
+        //res.send('Record saved successfully');
+    }
+    catch (error) {
+        console.log(error.message);
+        //res.status(400).send(error.message);
+    }
+}
+
+const getAllNotifications = async (id) => {
+    try {
+        var answers = await firestore.collection('users').doc(id).collection('notifications').orderBy("timeCreated", "desc");
+        var data = await answers.get();
+
+        var notificationsArray = [];
+
+        if (data.empty) {
+            return;
+        }
+        data.forEach(doc => {
+            const notification = new Notification(
+                doc.id,
+                doc.data().img,
+                doc.data().text,
+                doc.data().timeCreated
+            );
+            //console.log(doc.collection('answers').get());
+            notificationsArray.push(notification);
+        });
+        return(notificationsArray);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = {
+    createNotification,
+    getAllNotifications
+}

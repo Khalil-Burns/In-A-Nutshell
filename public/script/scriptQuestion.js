@@ -8,15 +8,19 @@ function generateAnswers() {
         answers.appendChild(answer);
 
         var table = document.createElement('table');
+        table.style = "width: 100%;";
         answer.appendChild(table);
 
         var tableRow = document.createElement('tr');
         table.appendChild(tableRow);
 
         var tdButtons = document.createElement('td');
+        tdButtons.style.width = "0%";
+        tdButtons.style.height = "0%";
         tableRow.appendChild(tdButtons);
 
         var tdText = document.createElement('td');
+        tdText.style.paddingLeft = "2%";
         tableRow.appendChild(tdText);
 
         if (isUser) {
@@ -59,6 +63,19 @@ function generateAnswers() {
             tdButtons.appendChild(bDislike);
         }
 
+        var wordCnt = document.createElement('p');
+        wordCnt.setAttribute("class", "wordCnt");
+        wordCnt.wordCnt = answersArray[idx].wordCnt;
+        if (parseInt(answersArray[idx].wordCnt, 10) <= 100) {
+            wordCnt.color = "green";
+        }
+        else {
+            wordCnt.color = "red";
+        }
+        wordCnt.innerHTML = `<strong>Word Count: </strong><p style="color: ${wordCnt.color}; display: inline; font-size: large">${wordCnt.wordCnt}</p>`
+        wordCnt.style = "float: right; font-size: medium;"
+        tdText.appendChild(wordCnt);
+
         var text = document.createElement('div');
         text.setAttribute("class", "answerText");
         text.answerID = answersArray[idx].id;
@@ -72,11 +89,11 @@ function generateAnswers() {
             userID: answersArray[idx].user.userID,
             displayName: answersArray[idx].user.displayName
         }
-        
         var d = new Date(parseInt(answersArray[idx].timeCreated, 10));
         subText.timeCreated = d.toString();
         subText.innerHTML = `Answered by <a href="/user/${subText.user.userID}">${subText.user.displayName}</a> on ${subText.timeCreated}`
         subText.style.fontSize = "small";
+        subText.style.textAlign = "right";
 
         tdText.appendChild(subText);
 
@@ -143,7 +160,8 @@ function post() {
       userEmail: userEmail,
       displayName: displayName
     },
-    questionID: questionID
+    questionID: questionID,
+    questionUser: questionUser 
   });
 
   submitAnswerPopup.style.display = "block";
