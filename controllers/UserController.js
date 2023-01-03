@@ -10,6 +10,10 @@ const {
 const {
   getAuth: getAdminAuth,
 } = require('firebase-admin/auth');
+const { 
+  createNotification, 
+  getAllNotifications,
+} = require('./NotificationController');
 
 async function curUser(req, res, next) {
   var output = {};
@@ -24,10 +28,13 @@ async function curUser(req, res, next) {
       );
       const userData = await firestore.collection('users').doc(auth.currentUser.uid).get();
 
+
+      var array = await getAllNotifications(auth.currentUser.uid);
+
       jsonConcat(output, { user: {
         userID: auth.currentUser.uid,
         userEmail: auth.currentUser.email,
-        notifications: userData.data().notifications,
+        notifications: array,
         displayName: userData.data().displayName
       }
     });
@@ -63,14 +70,13 @@ async function register(req, res, next) {
     const user = await firestore.doc(`users/${credential.user.uid}`).get();//.set({ secureNote });
 
     await firestore.collection('users').doc(credential.user.uid).set({
-      'notifications': {},
       'displayName': req.body.username
     });
 
     jsonConcat(output, { user: {
         userID: credential.user.uid,
         userEmail: email,
-        notifications: {},
+        notifications: [],
         displayName: req.body.username
       }
     });
@@ -103,10 +109,12 @@ async function signIn(req, res, next) {
 
     const userData = await firestore.collection('users').doc(credential.user.uid).get();
 
+    var array = await getAllNotifications(credential.user.uid);
+    
     jsonConcat(output, { user: {
       userID: credential.user.uid,
       userEmail: email,
-      notifications: userData.data().notifications,
+      notifications: array,
       username: userData.data().displayName
     }
   });

@@ -160,7 +160,8 @@ function post() {
       userEmail: userEmail,
       displayName: displayName
     },
-    questionID: questionID
+    questionID: questionID,
+    questionUser: questionUser 
   });
 
   submitAnswerPopup.style.display = "block";

@@ -4,6 +4,7 @@ const FieldValue = require('firebase-admin').firestore.FieldValue;
 
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
+const { createNotification } = require('./NotificationController');
 
 const addQuestion = async (req, res, next) => {
     try {
@@ -48,6 +49,11 @@ const addAnswer = async (req, res, next) => {
         };
         //await firestore.collection('questions').doc(req.body.questionID).update("answers", FieldValue.arrayUnion(answerData));
         await firestore.collection('questions').doc(req.body.questionID).collection('answers').add(answerData);
+        
+        if (req.body.questionUser.userID == req.body.user.userID) {
+            return;
+        }
+        createNotification(req.body.questionUser.userID, `Someone answered your <a href="/question/${req.body.questionID}">question</a>!`, '');
         //res.send('Record saved successfully');
     }
     catch (error) {

@@ -1,3 +1,34 @@
+function generateNotifications() {
+    var notifications = document.getElementById("notifications");
+    notifications.innerHTML = "<h2>Notifications:</h2>";
+    for (var idx = 0; idx < notificationsArray.length; idx++) {
+        var notification = document.createElement('div')
+        notification.setAttribute('class', 'notification');
+        notifications.appendChild(notification);
+
+        var hr = document.createElement('hr');
+        notification.appendChild(hr);
+
+        var table = document.createElement('table');
+        table.style = "width: 100%;";
+        notification.appendChild(table);
+
+        var tableRow = document.createElement('tr');
+        table.appendChild(tableRow);
+
+        var tdImg = document.createElement('td');
+        tdImg.style.width = "0%";
+        tdImg.style.height = "0%";
+        tdImg.innerHTML = `<img src="${notificationsArray[idx].img}" alt="">`
+        tableRow.appendChild(tdImg);
+
+        var tdText = document.createElement('td');
+        tdText.style.paddingLeft = "2%";
+        tdText.innerHTML = `<p>${notificationsArray[idx].text}</p>`
+        tableRow.appendChild(tdText);
+    }
+}
+
 function loginPopup() {
     var error = document.getElementById("signInError");
   
