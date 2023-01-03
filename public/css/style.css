@@ -104,6 +104,7 @@ textarea {
     animation: gradient 5s ease infinite;
     margin-right: 1%;
     margin-top: 20px;
+    padding: 0px;
     border-radius: 10px;
     height: 200px;
     width: 30%;
@@ -125,15 +126,26 @@ textarea {
 .answerSort {
     /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
     background: white;
-      background-size: 400% 400%;
-      animation: gradient 5s ease infinite;
-      margin-left: 1%;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      border-radius: 10px;
-      height: 30px;
-      width: 67%;
-  }
+    background-size: 400% 400%;
+    animation: gradient 5s ease infinite;
+    margin-left: 1%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    height: 30px;
+    width: 67%;
+}
+.questionTitle {
+    /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
+    background-color: white;
+    border-radius: 10px;
+}
+.questionDisplay {
+    /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
+    background-color: white;
+    border-radius: 10px;
+}
+
 #questions {
     /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
     background: white;
@@ -413,6 +425,16 @@ label{
     border: 1px solid #888;
     width: 80%;
     border-radius: 10px;
+}
+
+.questionButton {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
 }
 
 /* width */

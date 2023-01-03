@@ -32,7 +32,8 @@
         'user': {
           'userID': '<%- data.question.answers[idx].user.userID %>',
           'displayName': '<%- data.question.answers[idx].user.displayName %>'
-        }
+        },
+        'wordCnt': '<%- data.question.answers[idx].wordCnt %>'
       };
     '<% } %>'
 
@@ -177,6 +178,7 @@
 
   <div class="answerSort">
     <select id="sortAnswers">
+      <option value="wordCnt">Word Count</option>
       <option value="timeCreated">Date Posted</option>
       <option value="likes">Likes</option>
       <option value="dislikes">Dislikes</option>
@@ -268,7 +270,7 @@
   </div>
   <div class="answerField">
     <% if (!data.user) { %>
-      <div id="mustLogIn">You Must Log In First</div>
+      <div id="mustLogIn"><strong>You must log in before you answer this question!</strong></div>
       <style>
         #mustLogIn {
           width: 100%;
