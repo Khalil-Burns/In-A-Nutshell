@@ -52,6 +52,25 @@ textarea {
     float: right;
 }
 
+#tags {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+#tags li button {
+    all: initial;
+    border: 1px solid #ddd;
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #f6f6f6;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+    width: 100%;
+    z-index: 3;
+}
+
 .homeButton:hover {
     /* background-color: red; */
     background-color: #D8D5DB;
@@ -221,7 +240,7 @@ form {
     width: 100%;
 }
 
-form.example input[type=text] {
+#searchBar {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 1%;
@@ -229,8 +248,7 @@ form.example input[type=text] {
     font-size: 17px;
     border: 1px solid white;
     float: left;
-    width: 79.6%;
-    margin-top: 4px;
+    width: 90%;
     border-radius: 5px;
     background: #f1f1f1;
 }
@@ -243,9 +261,9 @@ form.example input[type=text] {
     border-radius: 0px;
 } */
 
-form.example button {
+#searchButton {
     float: right;
-    width: 16.5%;
+    width: 90%;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 1%;
@@ -258,9 +276,9 @@ form.example button {
     cursor: pointer;
 }
 
-form.example button:hover {
+#searchButton:hover {
     float: right;
-    width: 16.5%;
+    width: 90%;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 1%;
@@ -450,7 +468,9 @@ label{
 ::-webkit-scrollbar-track {
     border-radius: 4px;
 }
-
+td {
+    padding: 0px;
+}
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: grey;

@@ -18,9 +18,11 @@
     <script>
       
       var questionsArray = [];
+      var tags = [];
       var isUser = false;
       
       '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
+      
         questionsArray['<%- idx %>'] = {
           'id': '<%- data.questions[idx].id %>',
           'likes': '<%- data.questions[idx].likes %>',
@@ -32,6 +34,13 @@
             'displayName': '<%- data.questions[idx].user.displayName %>'
           }
         };
+
+      '<% } %>'
+
+      '<% for (var idx = 0; idx < data.tags.length; idx++) { %>'
+      
+        tags['<%- idx %>'] = '<%- data.tags[idx] %>';
+
       '<% } %>'
 
       '<% if (data.user) { %>'
@@ -74,10 +83,21 @@
             }
           </style>
         </button>
-        <form class="example" action="action_page.php">
-          <input type="text" placeholder="Search.." name="search">
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
+        <table style="width: 100%;padding:0%;z-index: 3;">
+          <tr>
+            <td><input type="text" id="searchBar" type="text" placeholder="Search.." name="search" autocomplete="off" 
+              oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1').toLowerCase();" 
+              onkeyup="filter()" 
+              onfocusin="showTags()" 
+              onfocusout="hideTags()"
+            ></td>
+            <td><button id="searchButton" type="submit"><i class="fa fa-search"></i></button></td>
+          </tr>
+          <tr>
+            <td><ul id="tags" style="display: none;"></ul></td>
+          </tr>
+        </table>
+
         <% if (!data.user) {%>
           <button onclick="signupPopup()" class="signup">Signup</button>
           <button onclick="loginPopup()" class="login">Login</button>
@@ -104,7 +124,7 @@
           #mustLogIn {
             width: 100%;
             height: 100%;
-            z-index: 3;
+            z-index: 2;
           }
         </style>
       <% } %>
@@ -185,8 +205,9 @@
         <p id="signUpError">asdf</p>
       </div>
     </div>
-    <div id="notifications">
-    </div>
+    <% if (data.user) { %>
+      <div id="notifications"></div>
+    <% } %>
     <div class="questionSort">
       <select id="sortQuestions">
         <option value="timeCreated">Date Posted</option>
@@ -254,6 +275,8 @@
     </div>
 
     <script>
+      var searchDepth = 5;
+      
       var closeQuestionPopup = document.getElementById("closeQuestion");
       var submitQuestionPopup = document.getElementById("submitPopup");
 
@@ -265,6 +288,8 @@
 
       var sortQuesSelect = document.getElementById('sortQuestions');
       var sortAscSelect = document.getElementById('sortAscending');
+
+      var tagList = document.getElementById('tags');
 
       sortQuesSelect.onchange = (event) => {
         questionsArray = sort(questionsArray, event.target.value, sortAscSelect.value);
@@ -308,6 +333,7 @@
       }
 
       generateQuestions();
+      generateTags();
 
       if (isUser) {
         generateNotifications();

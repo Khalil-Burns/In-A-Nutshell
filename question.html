@@ -115,7 +115,9 @@
       <% } %>
   </div>
   
-  <div id="notifications"></div>
+  <% if (data.user) { %>
+    <div id="notifications"></div>
+  <% } %>
 
   <div class="questionDisplay">
     <table>
