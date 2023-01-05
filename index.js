@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const path = require('path');
 
-//const userRoutes = require('./routes/question-routes');
 const { 
     addQuestion, 
     addAnswer, 
@@ -21,13 +20,16 @@ const {
     dislikeAns, 
     undislikeAns 
 } = require('./controllers/QuestionController');
-
 const { 
     register, 
     signIn, 
     curUser, 
     logOut 
 } = require('./controllers/UserController');
+const { 
+    getTags, 
+    addTag
+} = require('./controllers/TagController');
 
 const { render } = require('ejs');
 
@@ -46,13 +48,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', async (req, res, next) => {
     var questions = await getAllQuestions(req, res, next);
     const user = await curUser(req, res, next);
-    res.render(`${__dirname}/index.html`,  { data: { questions: questions, user: user.user }});
+    const tags = await getTags(req, res, next);
+
+    res.render(`${__dirname}/index.html`,  { data: { questions: questions, user: user.user, tags: tags }});
 });
 app.get('/question/:id', async (req, res, next) => {
     var data = await getQuestion(req, res, next);
     const user = await curUser(req, res, next);
+    const tags = await getTags(req, res, next);
+
     if (data[0]) {
-        res.render(`${__dirname}/question.html`,  { data: { question: data[1], user: user.user }});
+        res.render(`${__dirname}/question.html`,  { data: { question: data[1], user: user.user, tags: tags }});
     }
     else {
         res.send('Question not found!');

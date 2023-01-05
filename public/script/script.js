@@ -29,6 +29,63 @@ function generateNotifications() {
     }
 }
 
+function generateTags() {
+    tagList.innerHTML = "";
+    for (var idx = 0; idx < tags.length; idx++) {
+        var li = document.createElement('li');
+        li.style.display = "none";
+        tagList.appendChild(li);
+
+        var button = document.createElement('button');
+        button.innerHTML = `${tags[idx]}`;
+        li.appendChild(button);
+    }
+}
+function showTags() {
+    tagList.style.display = 'block';
+    li = tagList.getElementsByTagName("li");
+    for (var idx = 0; idx < Math.min(searchDepth, li.length); idx++) {
+        li[idx].style.display = 'block';
+    }
+    console.log('show tags');
+}
+function hideTags() {
+    tagList.style.display = 'none';
+    li = tagList.getElementsByTagName("li");
+    for (var idx = 0; idx < li.length; idx++) {
+        li[idx].style.display = 'none';
+    }
+    console.log('hide tags');
+}
+
+/*
+ *   most of the filter() code: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
+ */
+function filter() {
+    console.log('filter');
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("searchBar");
+    filter = input.value;
+
+    li = tagList.getElementsByTagName("li");
+
+    var displayCnt = 0;
+    for (i = 0; i < li.length; i++) {
+        button = li[i].getElementsByTagName("button")[0];
+        txtValue = button.textContent || button.innerText;
+        if (displayCnt >= searchDepth) {
+            li[i].style.display = "none";
+            continue;
+        }
+        if (txtValue.indexOf(filter) > -1) {
+            li[i].style.display = "";
+            displayCnt++;
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
 function loginPopup() {
     var error = document.getElementById("signInError");
   
