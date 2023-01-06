@@ -16,7 +16,7 @@ const addQuestion = async (req, res, next) => {
             'dislikes': 0,
             'wordCnt': req.body.wordCnt,
             'question': req.body.question,
-            'tags': '',
+            'tags': req.body.tags?req.body.tags:[],
             'text': req.body.text,
             'usersLiked': {
                 [id]: 1
@@ -95,6 +95,41 @@ const getAllQuestions = async (req, res, next) => {
         //res.status(400).send(error.message);
     }
 };
+const getAllQuestionsByTagAny = async (req, res, next) => {
+    try {
+        var filter = req.query.filter;
+        const questions = await firestore.collection("questions").where("tags", "array-contains", filter);
+        const data = await questions.get();
+        const questionsArray = [];
+        if (data.empty) {
+            //res.status(404).send('No user record found');
+            return;
+        }
+        data.forEach(doc => {
+            const question = new Question(
+                doc.id,
+                doc.data().user,
+                doc.data().likes,
+                doc.data().dislikes,
+                doc.data().wordCnt,
+                doc.data().question,
+                doc.data().tags,
+                doc.data().text,
+                doc.data().usersLiked,
+                undefined,
+                doc.data().timeCreated
+            );
+            //console.log(doc.collection('answers').get());
+            questionsArray.push(question);
+        });
+        return(questionsArray);
+    }
+    catch (error) {
+        console.log(error.message);
+        //res.status(400).send(error.message);
+    }
+};
+
 const getAllAnswers = async (data) => {
     try {
         const answersArray = [];
@@ -325,6 +360,7 @@ module.exports = {
     addQuestion,
     addAnswer,
     getAllQuestions,
+    getAllQuestionsByTagAny,
     getQuestion,
     like,
     unlike,

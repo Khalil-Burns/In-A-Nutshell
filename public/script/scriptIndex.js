@@ -1,4 +1,5 @@
 function generateQuestions() {
+  console.log(questionsArray);
   var questions = document.getElementById("questions");
   questions.innerHTML = "";
   for (var idx = 0; idx < questionsArray.length; idx++) {
@@ -96,15 +97,157 @@ function generateQuestions() {
 function dropdownOnClick() {
   document.getElementById("userDropdown").classList.toggle("show");
 }
-function post() {
+
+function generateAddTags() {
+  addTagList.innerHTML = "";
+
+  for (var idx = 0; idx < tags.length; idx++) {
+      var li = document.createElement('li');
+      li.style.display = "none";
+      addTagList.appendChild(li);
+
+      var button = document.createElement('button');
+      button.innerHTML = `${tags[idx]}`;
+      button.onclick = function() {
+          var input = document.getElementById("inputTag");
+          console.log('Search Text' + this.innerHTML);
+          input.value = this.innerHTML;
+          hideAddTagsDisplay();
+      };
+      li.appendChild(button);
+  }
+}
+function generateAddTagsDisplay() {
+  addTagDiv.innerHTML = "";
+
+  for (var idx = 0; idx < tagsArray.length; idx++) {
+    var div = document.createElement('div');
+    div.innerHTML = tagsArray[idx];
+    div.index = idx;
+    addTagDiv.appendChild(div);
+
+    var span = document.createElement('span');
+    span.setAttribute('class', 'close');
+    span.index = idx;
+    span.innerHTML = '&times;';
+    span.onclick = function() {removeTag(this.index);}
+    span.style.float = 'left';
+    div.appendChild(span);
+  }
+}
+
+function showAddTagsDisplay(filt) {
+  addTagList.style.display = 'block';
+  li = addTagList.getElementsByTagName("li");
+  for (var idx = 0; idx < Math.min(searchDepth, li.length); idx++) {
+    li[idx].style.display = 'block';
+  }
+  if (filt) {
+    return;
+  }
+  filterAddTagsDisplay();
+}
+function hideAddTagsDisplay() {
+  addTagList.style.display = 'none';
+  li = addTagList.getElementsByTagName("li");
+  for (var idx = 0; idx < li.length; idx++) {
+    li[idx].style.display = 'none';
+  }
+}
+
+/*
+*   most of the filter() code: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
+*/
+function filterAddTagsDisplay() {
+
+  var error = document.getElementById("tagsError");
+  error.innerHTML = '';
+
+  var input, filter, li, button, i, txtValue;
+  input = document.getElementById("inputTag");
+  filter = input.value;
+
+  li = addTagList.getElementsByTagName("li");
+
+  var displayCnt = 0;
+  if (filter == '') {
+    showAddTagsDisplay(true);
+    return;
+  }
+
+  for (i = 0; i < li.length; i++) {
+    button = li[i].getElementsByTagName("button")[0];
+    txtValue = button.textContent || button.innerText;
+    if (displayCnt >= searchDepth) {
+        li[i].style.display = "none";
+        continue;
+    }
+    if (txtValue.indexOf(filter) > -1) {
+        li[i].style.display = "";
+        displayCnt++;
+    } else {
+        li[i].style.display = "none";
+    }
+  }
+}
+
+function addTag() {
+  var error = document.getElementById("tagsError");
+  error.innerHTML = '';
+
+  var input = document.getElementById("inputTag").value;
+
+  if (tagsArray.length == 5) {
+    error.innerHTML = 'Can\'t have more than 5 tags';
+    return;
+  }
+  if (tagsAdded[input] == true) {
+    error.innerHTML = 'Tag already added';
+    return;
+  }
+  if (input == '') {
+    error.innerHTML = 'You didn\'t type in a tag';
+    return;
+  }
+
+  tagsArray.push(input);
+  tagsAdded[input] = true;
+  document.getElementById("inputTag").value = '';
+  generateAddTagsDisplay();
+}
+function removeTag(idx) {
+  console.log(idx);
+  tagsAdded[tagsArray[idx]] = false;
+  if (tagsArray.length == 1) {
+    tagsArray = [];
+  }
+  else {
+    tagsArray.splice(idx, idx);
+  }
+  generateAddTagsDisplay();
+}
+
+function showTagsPopup() {
   var question = document.getElementById("title").value;
 
   if (!question) {
 
-    submitQuestionPopup.style.display = "block";
-    $("#questionPosted > p").text("You didn't type in a question!");
-    return;
+      submitQuestionPopup.style.display = "block";
+      $("#questionPosted > p").text("You didn't type in a question!");
+      return;
   }
+
+  var error = document.getElementById("tagsError");
+  error.innerHTML = "";
+
+  tagsPopup.style.display = "block";
+}
+
+function post() {
+
+  var question = document.getElementById("title").value;
+
+  tagsPopup.style.display = "none";
 
   var text = tinymce.get('questionField').getContent();
   document.getElementById("title").value = '';
@@ -118,6 +261,7 @@ function post() {
   {
     question: question,
     text: text,
+    tags: tagsArray,
     wordCnt: wordCnt,
     user: {
       userID: userID,
@@ -125,9 +269,11 @@ function post() {
       displayName: displayName,
     }
   }, function(data, status) {
-    window.location.replace("/");
+    tagsArray = [];
+    tagsAdded = {};
     submitQuestionPopup.style.display = "block";
     $("#questionPosted > p").text("Question posted!");
+    location.reload();
   });
 };
 

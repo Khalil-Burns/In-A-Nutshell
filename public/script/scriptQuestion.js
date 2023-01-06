@@ -150,6 +150,9 @@ function post() {
   var wordCnt = tinymce.activeEditor.plugins.wordcount.getCount();
   tinymce.get('answerField').setContent('');
 
+    submitAnswerPopup.style.display = "block";
+    $("#AnswerPosted > p").text("Loading...");
+
   $.post("/answer",
   {
     title: title,
@@ -162,10 +165,12 @@ function post() {
     },
     questionID: questionID,
     questionUser: questionUser 
+  }, function () {
+    submitAnswerPopup.style.display = "block";
+    $("#AnswerPosted > p").text("Answer posted!");
+    location.reload();
   });
 
-  submitAnswerPopup.style.display = "block";
-  $("#AnswerPosted > p").text("Answer posted!");
 };
 
 function likeAns(id, amount) {
