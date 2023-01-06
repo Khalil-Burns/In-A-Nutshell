@@ -10,6 +10,7 @@ const {
     addQuestion, 
     addAnswer, 
     getAllQuestions, 
+    getAllQuestionsByTagAny,
     getQuestion, 
     like, 
     unlike, 
@@ -46,7 +47,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', async (req, res, next) => {
-    var questions = await getAllQuestions(req, res, next);
+    if (req.query.filter) {
+        var questions = await getAllQuestionsByTagAny(req, res, next);
+    }
+    else {
+        var questions = await getAllQuestions(req, res, next);
+    }
     const user = await curUser(req, res, next);
     const tags = await getTags(req, res, next);
 

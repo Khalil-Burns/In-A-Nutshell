@@ -18,22 +18,27 @@
     <script>
       
       var questionsArray = [];
+      console.log(questionsArray);
       var tags = [];
       var isUser = false;
       
-      '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
-      
-        questionsArray['<%- idx %>'] = {
-          'id': '<%- data.questions[idx].id %>',
-          'likes': '<%- data.questions[idx].likes %>',
-          'dislikes': '<%- data.questions[idx].dislikes %>',
-          'question': '<%- data.questions[idx].question %>',
-          'timeCreated': '<%- data.questions[idx].timeCreated %>',
-          'user': {
-            'userID': '<%- data.questions[idx].user.userID %>',
-            'displayName': '<%- data.questions[idx].user.displayName %>'
-          }
-        };
+      '<% if (data.questions) { %>'
+
+        '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
+        
+          questionsArray['<%- idx %>'] = {
+            'id': '<%- data.questions[idx].id %>',
+            'likes': '<%- data.questions[idx].likes %>',
+            'dislikes': '<%- data.questions[idx].dislikes %>',
+            'question': '<%- data.questions[idx].question %>',
+            'timeCreated': '<%- data.questions[idx].timeCreated %>',
+            'user': {
+              'userID': '<%- data.questions[idx].user.userID %>',
+              'displayName': '<%- data.questions[idx].user.displayName %>'
+            }
+          };
+
+        '<% } %>'
 
       '<% } %>'
 
@@ -50,24 +55,33 @@
         var displayName = '<%- data.user.displayName %>';
 
         var notificationsArray = [];
-        '<% for (var idx = 0; idx < data.user.notifications.length; idx++) { %>'
+        '<% if (data.user.notifications) { %>'
 
-          notificationsArray['<%- idx %>'] = {
-            'id': '<%- data.user.notifications[idx].id %>',
-            'img': '<%- data.user.notifications[idx].img %>',
-            'text': '<%- data.user.notifications[idx].text %>',
-            'timeCreated': '<%- data.user.notifications[idx].timeCreated %>'
-          }
+          '<% for (var idx = 0; idx < data.user.notifications.length; idx++) { %>'
 
+            notificationsArray['<%- idx %>'] = {
+              'id': '<%- data.user.notifications[idx].id %>',
+              'img': '<%- data.user.notifications[idx].img %>',
+              'text': '<%- data.user.notifications[idx].text %>',
+              'timeCreated': '<%- data.user.notifications[idx].timeCreated %>'
+            }
+
+          '<% } %>'
+          
         '<% } %>'
 
         var likes = {};
-        '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
 
-          '<% if (data.questions[idx].usersLiked[data.user.userID]) { %>'
-            likes['<%- data.questions[idx].id %>'] = '<%- data.questions[idx].usersLiked[data.user.userID] %>';
+        '<% if (data.questions) { %>'
+
+          '<% for (var idx = 0; idx < data.questions.length; idx++) { %>'
+
+            '<% if (data.questions[idx].usersLiked[data.user.userID]) { %>'
+              likes['<%- data.questions[idx].id %>'] = '<%- data.questions[idx].usersLiked[data.user.userID] %>';
+            '<% } %>'
+
           '<% } %>'
-
+        
         '<% } %>'
 
       '<% } %>'
@@ -89,9 +103,8 @@
               oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1').toLowerCase();" 
               onkeyup="filter()" 
               onfocusin="showTags()" 
-              onfocusout="hideTags()"
             ></td>
-            <td><button id="searchButton" type="submit"><i class="fa fa-search"></i></button></td>
+            <td><button id="searchButton" type="submit" onclick="search()"><i class="fa fa-search"></i></button></td>
           </tr>
           <tr>
             <td><ul id="tags" style="display: none;"></ul></td>
@@ -119,7 +132,7 @@
     </div>
     <div class="askField">
       <% if (!data.user) { %>
-        <div id="mustLogIn">You Must Log In First</div>
+        <div id="mustLogIn">You must log in before you ask a quesiton!</div>
         <style>
           #mustLogIn {
             width: 100%;
@@ -170,7 +183,7 @@
         </script>
         <% if (data.user) { %>
           <textarea id="title" rows="1"></textarea>
-          <input id="postQuestion" type="button" value="Ask!" onclick="post()"/>
+          <input id="postQuestion" type="button" value="Ask!" onclick="showTagsPopup()"/>
         <% } %>
       </div>
     </div>
@@ -178,6 +191,30 @@
       <div id="questionPosted">
         <span id="closeQuestion" class="close">&times;</span>
         <p>Question submitted!</p>
+      </div>
+    </div>
+
+    <div id="tagsPopup" class="popup">
+      <div id="tagsUI">
+        <span id="closeTags" class="close">&times;</span>
+        <table style="width: 100%;padding:0%;z-index: 3;">
+          <tr>
+            <td>
+              <label for="tag">Tags:</label><br>
+              <input type="text" id="inputTag" placeholder="Tag" name="tag" value="" autocomplete="off" 
+              oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').replace(/(\..*)\./g, '$1').toLowerCase();" 
+              onkeyup="filterAddTagsDisplay()" 
+              onfocusin="showAddTagsDisplay()" 
+            ></td>
+            <td><br><button onclick="addTag()">Add Tag</button></td>
+          </tr>
+          <tr>
+            <td><ul id="addTagsSearch" style="display: none;"></ul></td>
+          </tr>
+        </table>
+        <div id="displayAddTags"></div>
+        <input type="button" value="Post" onclick="post()">
+        <p id="tagsError"></p>
       </div>
     </div>
 
@@ -189,7 +226,7 @@
         <label for="password">Password:</label><br>
         <input type="password" id="signInPassword" name="password" value=""><br><br>
         <input type="button" value="Submit" onclick="login()">
-        <p id="signInError">asdf</p>
+        <p id="signInError"></p>
       </div>
     </div>
     <div id="signUpPopup" class="popup">
@@ -202,7 +239,7 @@
         <label for="password">Password:</label><br>
         <input type="password" id="signUpPassword" name="password" value=""><br><br>
         <input type="button" value="Submit" onclick="signup()">
-        <p id="signUpError">asdf</p>
+        <p id="signUpError"></p>
       </div>
     </div>
     <% if (data.user) { %>
@@ -219,66 +256,19 @@
         <option value="true">Low to high</option>
       </select>
     </div>
-    <div id="questions">
-      <!-- <% for(var idx = 0; idx < data.questions.length; idx++) { %>
-        <div class="question">
-          <table>
-            <tr>
-              <td>
-                <% if (data.user) { %>
-                  <button class="like" id="like-<%- data.questions[idx].id %>" onclick="preLike('<%- data.questions[idx].id %>')"
-                    <% if(data.questions[idx].usersLiked[data.user.uid] == 1) { %>
-                      style="background-color: red;"
-                    <% } %>
-                  >
-                    <p>
-                      <%- data.questions[idx].likes %>
-                    </p> ^
-                    <script>
-                      
-                    </script>
-                  </button>
-
-                  <button class="dislike" id="dislike-<%- data.questions[idx].id %>" onclick="preDislike('<%- data.questions[idx].id %>')"
-                    <% if(data.questions[idx].usersLiked[data.user.uid] == 2) { %>
-                      style="background-color: red;"
-                    <% } %>
-                  >
-                    <p>
-                      <%- data.questions[idx].dislikes %>
-                    </p> v
-                    <script>
-                    </script>
-                  </button>
-
-                <% } else { %>
-                  <p class="like">
-                    <%- data.questions[idx].likes %> ^
-                  </p>
-                  <p class="dislike">
-                    <%- data.questions[idx].dislikes %> v
-                  </p>
-                <% } %>
-              </td>
-              <td>
-                <button onclick="location.href = '/question/<%- data.questions[idx].id %>'" class="questionButton">
-                  <strong><%- data.questions[idx].question %></strong>
-                </button>
-              </td>
-            </tr>
-          </table>
-          <% if (idx < data.questions.length - 1) { %>
-            <hr>
-          <% } %>
-        </div> -->
-      <% } %>
-    </div>
+    <div id="questions"></div>
 
     <script>
       var searchDepth = 5;
+
+      var tagsArray = [];
+      var tagsAdded = {};
       
       var closeQuestionPopup = document.getElementById("closeQuestion");
       var submitQuestionPopup = document.getElementById("submitPopup");
+
+      var closeTagsPopup = document.getElementById("closeTags");
+      var tagsPopup = document.getElementById("tagsPopup");
 
       var closeSignInPopup = document.getElementById("closeSignIn");
       var signInPopup = document.getElementById("signInPopup");
@@ -289,7 +279,12 @@
       var sortQuesSelect = document.getElementById('sortQuestions');
       var sortAscSelect = document.getElementById('sortAscending');
 
+      var searchBar = document.getElementById('searchBar');
       var tagList = document.getElementById('tags');
+      
+      var searchAddTag = document.getElementById('inputTag');
+      var addTagList = document.getElementById('addTagsSearch');
+      var addTagDiv = document.getElementById('displayAddTags');
 
       sortQuesSelect.onchange = (event) => {
         questionsArray = sort(questionsArray, event.target.value, sortAscSelect.value);
@@ -303,6 +298,9 @@
       closeQuestionPopup.onclick = function() {
         submitQuestionPopup.style.display = "none";
       }
+      closeTags.onclick = function() {
+        tagsPopup.style.display = "none";
+      }
       closeSignInPopup.onclick = function() {
         signInPopup.style.display = "none";
       }
@@ -314,11 +312,20 @@
         if (event.target == submitQuestionPopup) {
           submitQuestionPopup.style.display = "none";
         }
+        if (event.target == tagsPopup) {
+          tagsPopup.style.display = "none";
+        }
         if (event.target == signInPopup) {
           signInPopup.style.display = "none";
         }
         if (event.target == signUpPopup) {
           signUpPopup.style.display = "none";
+        }
+        if (event.target != searchBar && event.target != tagList) {
+          hideTags();
+        }
+        if (event.target != searchAddTag && event.target != addTagList) {
+          hideAddTagsDisplay();
         }
         if (!event.target.matches('.dropdownButton')) {
           var dropdowns = document.getElementsByClassName("dropdownOnClick");
@@ -332,8 +339,10 @@
         }
       }
 
+      questionsArray = sort(questionsArray, sortQuesSelect.value, sortAscSelect.value);
       generateQuestions();
       generateTags();
+      generateAddTags();
 
       if (isUser) {
         generateNotifications();

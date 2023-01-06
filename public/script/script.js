@@ -31,6 +31,7 @@ function generateNotifications() {
 
 function generateTags() {
     tagList.innerHTML = "";
+
     for (var idx = 0; idx < tags.length; idx++) {
         var li = document.createElement('li');
         li.style.display = "none";
@@ -38,16 +39,25 @@ function generateTags() {
 
         var button = document.createElement('button');
         button.innerHTML = `${tags[idx]}`;
+        button.onclick = function() {
+            var input = document.getElementById("searchBar");
+            console.log('Search Text' + this.innerHTML);
+            input.value = this.innerHTML;
+            hideTags();
+        };
         li.appendChild(button);
     }
 }
-function showTags() {
+function showTags(filt) {
     tagList.style.display = 'block';
     li = tagList.getElementsByTagName("li");
     for (var idx = 0; idx < Math.min(searchDepth, li.length); idx++) {
         li[idx].style.display = 'block';
     }
-    console.log('show tags');
+    if (filt) {
+        return;
+    }
+    filter();
 }
 function hideTags() {
     tagList.style.display = 'none';
@@ -55,17 +65,19 @@ function hideTags() {
     for (var idx = 0; idx < li.length; idx++) {
         li[idx].style.display = 'none';
     }
-    console.log('hide tags');
 }
 
 /*
  *   most of the filter() code: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_list
  */
 function filter() {
-    console.log('filter');
-    var input, filter, ul, li, a, i, txtValue;
+    var input, filter, li, button, i, txtValue;
     input = document.getElementById("searchBar");
     filter = input.value;
+
+    if (filter == '') {
+        showTags(true);
+    }
 
     li = tagList.getElementsByTagName("li");
 
@@ -84,6 +96,15 @@ function filter() {
             li[i].style.display = "none";
         }
     }
+}
+
+function search() {
+    var input = document.getElementById("searchBar").value;
+    if (input == '') {
+        window.location.replace(`/`);
+        return;
+    }
+    window.location.replace(`/?filter=${input}`);
 }
 
 function loginPopup() {
@@ -173,6 +194,12 @@ function logout() {
 }
 
 function sort(array, sortBy, isAsc) {
+    if (!array) {
+        return([]);
+    }
+    if (array.length == 0) {
+        return([]);
+    }
     quicksort(array, 0, array.length - 1, sortBy, isAsc);
     return(array);
 }

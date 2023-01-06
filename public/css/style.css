@@ -70,6 +70,46 @@ textarea {
     width: 100%;
     z-index: 3;
 }
+#tags li button:hover {
+    all: initial;
+    border: 1px solid #ddd;
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #bdbdbd;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+    width: 100%;
+    z-index: 3;
+}
+
+#addTagsSearch li button {
+    all: initial;
+    border: 1px solid #ddd;
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #f6f6f6;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+    width: 100%;
+    z-index: 3;
+}
+#addTagsSearch li button:hover {
+    all: initial;
+    border: 1px solid #ddd;
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #bdbdbd;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+    width: 100%;
+    z-index: 3;
+}
 
 .homeButton:hover {
     /* background-color: red; */
@@ -425,6 +465,14 @@ label{
 }
 
 #questionPosted {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 10px;
+}
+#tagsUI {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
