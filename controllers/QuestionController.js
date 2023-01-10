@@ -145,7 +145,7 @@ const getAllAnswers = async (data) => {
                 doc.data().dislikes,
                 doc.data().wordCnt,
                 doc.data().title,
-                doc.data().answer,
+                doc.data().answer.replaceAll('\n',''),
                 doc.data().usersLiked,
                 doc.data().timeCreated
             );
@@ -207,11 +207,11 @@ const like = async (req, res, next) => {
 
         // await question.update(data);
         // console.log('end like');
-        const id = req.params.id;
+        const id = req.query.id;
 
         await firestore.collection('questions').doc(id).update("likes", FieldValue.increment(1));
-        await firestore.collection('questions').doc(id).update("dislikes", FieldValue.increment(-req.body.amount));
-        await firestore.collection('questions').doc(id).update(`usersLiked.${req.body.userID}`, 1);
+        await firestore.collection('questions').doc(id).update("dislikes", FieldValue.increment(-req.query.amount));
+        await firestore.collection('questions').doc(id).update(`usersLiked.${req.query.userID}`, 1);
     }
     catch (error) {
         return(error);
@@ -243,10 +243,10 @@ const unlike = async (req, res, next) => {
         // await question.update(data);
         // console.log('end unlike');
 
-        const id = req.params.id;
+        const id = req.query.id;
 
         await firestore.collection('questions').doc(id).update("likes", FieldValue.increment(-1));
-        await firestore.collection('questions').doc(id).update(`usersLiked.${req.body.userID}`, 0);
+        await firestore.collection('questions').doc(id).update(`usersLiked.${req.query.userID}`, 0);
     }
     catch (error) {
         return(error);
@@ -265,11 +265,11 @@ const dislike = async (req, res, next) => {
 
         // await question.update(data);
         // console.log('end dislike');
-        const id = req.params.id;
+        const id = req.query.id;
 
         await firestore.collection('questions').doc(id).update("dislikes", FieldValue.increment(1));
-        await firestore.collection('questions').doc(id).update("likes", FieldValue.increment(-req.body.amount));
-        await firestore.collection('questions').doc(id).update(`usersLiked.${req.body.userID}`, 2);
+        await firestore.collection('questions').doc(id).update("likes", FieldValue.increment(-req.query.amount));
+        await firestore.collection('questions').doc(id).update(`usersLiked.${req.query.userID}`, 2);
     }
     catch (error) {
         console.log(error);
@@ -290,10 +290,10 @@ const undislike = async (req, res, next) => {
 
         // await question.update(data);
         // console.log('end undislike');
-        const id = req.params.id;
+        const id = req.query.id;
 
         await firestore.collection('questions').doc(id).update("dislikes", FieldValue.increment(-1));
-        await firestore.collection('questions').doc(id).update(`usersLiked.${req.body.userID}`, 0);
+        await firestore.collection('questions').doc(id).update(`usersLiked.${req.query.userID}`, 0);
     }
     catch (error) {
         return(error);
@@ -302,11 +302,11 @@ const undislike = async (req, res, next) => {
 
 const likeAns = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.query.quesID;
 
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`likes`, FieldValue.increment(1));
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`dislikes`, FieldValue.increment(-req.body.amount));
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`usersLiked.${req.body.userID}`, 1);
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`likes`, FieldValue.increment(1));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`dislikes`, FieldValue.increment(-req.query.amount));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`usersLiked.${req.query.userID}`, 1);
     }
     catch (error) {
         return(error);
@@ -314,10 +314,10 @@ const likeAns = async (req, res, next) => {
 }
 const unlikeAns = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.query.quesID;
 
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`likes`, FieldValue.increment(-1));
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`usersLiked.${req.body.userID}`, 0);
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`likes`, FieldValue.increment(-1));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`usersLiked.${req.query.userID}`, 0);
     }
     catch (error) {
         return(error);
@@ -325,11 +325,11 @@ const unlikeAns = async (req, res, next) => {
 }
 const dislikeAns = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.query.quesID;
 
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`dislikes`, FieldValue.increment(1));
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`likes`, FieldValue.increment(-req.body.amount));
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`usersLiked.${req.body.userID}`, 2);
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`dislikes`, FieldValue.increment(1));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`likes`, FieldValue.increment(-req.query.amount));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`usersLiked.${req.query.userID}`, 2);
     }
     catch (error) {
         console.log(error);
@@ -338,10 +338,10 @@ const dislikeAns = async (req, res, next) => {
 }
 const undislikeAns = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.query.quesID;
 
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`dislikes`, FieldValue.increment(-1));
-        await firestore.collection('questions').doc(id).collection('answers').doc(req.body.ansID).update(`usersLiked.${req.body.userID}`, 0);
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`dislikes`, FieldValue.increment(-1));
+        await firestore.collection('questions').doc(id).collection('answers').doc(req.query.ansID).update(`usersLiked.${req.query.userID}`, 0);
     }
     catch (error) {
         return(error);
