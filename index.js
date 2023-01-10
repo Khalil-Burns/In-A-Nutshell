@@ -70,6 +70,9 @@ app.get('/question/:id', async (req, res, next) => {
         res.send('Question not found!');
     }
 });
+app.get('/about', async (req, res, next) => {
+    res.render(`${__dirname}/about.html`);
+})
 
 app.post('/like/:id', async (req, res, next) => {
     await like(req, res, next);
