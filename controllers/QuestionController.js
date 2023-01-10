@@ -53,7 +53,7 @@ const addAnswer = async (req, res, next) => {
         if (req.body.questionUser.userID == req.body.user.userID) {
             return;
         }
-        createNotification(req.body.questionUser.userID, `Someone answered your <a href="/question/${req.body.questionID}">${req.body.questionTitle}</a>!`, '');
+        createNotification(req.body.questionUser.userID, `Someone answered <a href="/question/${req.body.questionID}">${req.body.questionTitle}</a>?`, '');
         //res.send('Record saved successfully');
     }
     catch (error) {
