@@ -164,7 +164,8 @@ function post() {
       displayName: displayName
     },
     questionID: questionID,
-    questionUser: questionUser 
+    questionUser: questionUser, 
+    questionTitle: questionTitle,
   }, function () {
     submitAnswerPopup.style.display = "block";
     $("#AnswerPosted > p").text("Answer posted!");
