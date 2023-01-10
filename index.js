@@ -60,6 +60,7 @@ app.get('/', async (req, res, next) => {
 });
 app.get('/question/:id', async (req, res, next) => {
     var data = await getQuestion(req, res, next);
+    console.log(data[1]);
     const user = await curUser(req, res, next);
     const tags = await getTags(req, res, next);
 
@@ -71,36 +72,36 @@ app.get('/question/:id', async (req, res, next) => {
     }
 });
 
-app.post('/like/:id', async (req, res, next) => {
+app.get('/like', async (req, res, next) => {
     await like(req, res, next);
     res.send('complete like');
 });
-app.post('/unlike/:id', async (req, res, next) => {
+app.get('/unlike', async (req, res, next) => {
     await unlike(req, res, next);
     res.send('complete unlike');
 });
-app.post('/dislike/:id', async (req, res, next) => {
+app.get('/dislike', async (req, res, next) => {
     await dislike(req, res, next);
     res.send('complete dislike');
 });
-app.post('/undislike/:id', async (req, res, next) => {
+app.get('/undislike', async (req, res, next) => {
     await undislike(req, res, next);
     res.send('complete undislike');
 });
 
-app.post('/likeAns/:id', async (req, res, next) => {
+app.get('/likeAns', async (req, res, next) => {
     await likeAns(req, res, next);
     res.send('complete like');
 });
-app.post('/unlikeAns/:id', async (req, res, next) => {
+app.get('/unlikeAns', async (req, res, next) => {
     await unlikeAns(req, res, next);
     res.send('complete unlike');
 });
-app.post('/dislikeAns/:id', async (req, res, next) => {
+app.get('/dislikeAns', async (req, res, next) => {
     await dislikeAns(req, res, next);
     res.send('complete dislike');
 });
-app.post('/undislikeAns/:id', async (req, res, next) => {
+app.get('/undislikeAns', async (req, res, next) => {
     await undislikeAns(req, res, next);
     res.send('complete undislike');
 });

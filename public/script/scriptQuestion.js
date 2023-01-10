@@ -187,12 +187,7 @@ function likeAns(id, amount) {
     dislike.style.removeProperty('background-color');
   
   
-    $.post(`/likeAns/${questionID}`, 
-    {
-        userID: userID,
-        ansID: id,
-        amount: amount
-    });
+    $.get(`/likeAns/?quesID=${questionID}&ansID=${id}&userID=${userID}&amount=${amount}`);
 }
 function unlikeAns(id) {
     var like = document.getElementById(`likeAns-${id}`);
@@ -202,12 +197,7 @@ function unlikeAns(id) {
     like.style.removeProperty('background-color');
   
   
-    $.post(`/unlikeAns/${questionID}`, 
-    {
-        userID: userID,
-        ansID: id,
-        amount: 0
-    });
+    $.get(`/unlikeAns/?quesID=${questionID}&ansID=${id}&userID=${userID}&amount=${amount}`);
 }
   
 function dislikeAns(id, amount) {
@@ -224,12 +214,7 @@ function dislikeAns(id, amount) {
     like.style.removeProperty('background-color');
   
   
-    $.post(`/dislikeAns/${questionID}`, 
-    {
-        userID: userID,
-        ansID: id,
-        amount: amount
-    });
+    $.get(`/dislikeAns/?quesID=${questionID}&ansID=${id}&userID=${userID}&amount=${amount}`);
 }
   function undislikeAns(id) {
     var dislike = document.getElementById(`dislikeAns-${id}`);
@@ -239,12 +224,7 @@ function dislikeAns(id, amount) {
     dislike.style.removeProperty('background-color');
   
   
-    $.post(`/undislikeAns/${questionID}`, 
-    {
-        userID: userID,
-        ansID: id,
-        amount: 0
-    });
+    $.get(`/undislikeAns/?quesID=${questionID}&ansID=${id}&userID=${userID}&amount=${amount}`);
 }
 
 function likeQues(id, amount) {
@@ -261,11 +241,7 @@ function likeQues(id, amount) {
     dislike.style.removeProperty('background-color');
   
   
-    $.post(`/like/${id}`, 
-    {
-      userID: userID,
-      amount: amount
-    });
+    $.get(`/like/?id=${id}&userID=${userID}&amount=${amount}`);
 }
 function unlikeQues(id) {
     var like = document.getElementById(`likeQues-${id}`);
@@ -275,11 +251,7 @@ function unlikeQues(id) {
     like.style.removeProperty('background-color');
   
   
-    $.post(`/unlike/${id}`, 
-    {
-        userID: userID,
-        amount: 0
-    });
+    $.get(`/unlike/?id=${id}&userID=${userID}&amount=${amount}`);
 }
   
 function dislikeQues(id, amount) {
@@ -296,11 +268,7 @@ function dislikeQues(id, amount) {
     like.style.removeProperty('background-color');
   
   
-    $.post(`/dislike/${id}`, 
-    {
-        userID: userID,
-        amount: amount
-    });
+    $.get(`/dislike/?id=${id}&userID=${userID}&amount=${amount}`);
 }
 function undislikeQues(id) {
     var dislike = document.getElementById(`dislikeQues-${id}`);
@@ -310,9 +278,5 @@ function undislikeQues(id) {
     dislike.style.removeProperty('background-color');
   
   
-    $.post(`/undislike/${id}`, 
-    {
-        userID: userID,
-        amount: 0
-    });
+    $.get(`/undislike/?id=${id}&userID=${userID}&amount=${amount}`);
 }

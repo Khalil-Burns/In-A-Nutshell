@@ -22,6 +22,7 @@
     var isUser = false;
 
     '<% for (var idx = 0; idx < data.question.answers.length; idx++) { %>'
+      
       answersArray['<%- idx %>'] = {
         'id': '<%- data.question.answers[idx].id %>',
         'likes': '<%- data.question.answers[idx].likes %>',
