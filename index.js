@@ -60,7 +60,6 @@ app.get('/', async (req, res, next) => {
 });
 app.get('/question/:id', async (req, res, next) => {
     var data = await getQuestion(req, res, next);
-    console.log(data[1]);
     const user = await curUser(req, res, next);
     const tags = await getTags(req, res, next);
 
