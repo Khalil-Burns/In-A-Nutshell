@@ -392,11 +392,13 @@ button {
 
 .questionTitle {
     margin-left: 1%;
+    width: 318%;
 }
 
 .questionText {
     margin-left: 1%;
     margin-top: 0px;
+    width: 318%;
 }
 
 .bold {
