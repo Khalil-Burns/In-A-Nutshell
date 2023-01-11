@@ -192,7 +192,7 @@
           <div class="questionTitle" style="padding-left: 2%; padding-right: 2%;">
             <h1><%- data.question.question %></h1>
           </div>
-          <div class="questionText" style="height:100px; padding-left: 2%; padding-right: 2%; padding-top: 1px; padding-bottom: 1px;">
+          <div class="questionText" style="height:100%; padding-left: 2%; padding-right: 2%; padding-top: 1px; padding-bottom: 1px;">
             <p><%- data.question.text %></p>
           </div>
         </td>
@@ -200,7 +200,7 @@
     </table>
   </div>
 
-  <div class="answerSort">
+  <div class="answerSort" style="margin-top: 75px;">
     <select id="sortAnswers">
       <option value="wordCnt">Word Count</option>
       <option value="timeCreated">Date Posted</option>
@@ -329,7 +329,7 @@
         });
       </script>
       <% if (data.user) { %>
-        <textarea id="title" rows="1"></textarea>
+        <textarea id="title" placeholder="Answer title" rows="1"></textarea>
         <input id="postAnswer" type="button" value="Ask!" onclick="post()"/>
       <% } %>
     </div>

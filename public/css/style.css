@@ -14,6 +14,7 @@
 
 html, body {
     
+    font-family: Helvetica, sans-serif;
     
     background-color: #d3d3d3;
     /* background-color: #F5B700; */
@@ -58,6 +59,14 @@ textarea {
     border-radius: 4px;
 }
 #postQuestion {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 19%;
+    float: right;
+}
+#postAnswer {
     margin-top: 7px;
     margin-bottom: 7px;
     margin-left: 1%;
@@ -148,12 +157,12 @@ textarea {
 
 .topBar {
     /* background: linear-gradient(-45deg, #568aa6, #4400ff, #4a7a96); */
-    background: white;
+    background: #ededed;
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
     margin-left: 1%;
     margin-top: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     width: 98%;
     height: 50px;
     display: flex;
@@ -161,79 +170,92 @@ textarea {
 }
 .askField {
     /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
-    background: white;
+    background: #ededed;
     background-size: 400% 400%;
     animation: gradient 20s ease infinite;
     margin-left: 1%;
     margin-top: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
+    width: 98%;
+    display: inline-block;
+}
+.answerField {
+    /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
+    background: #ededed;
+    background-size: 400% 400%;
+    animation: gradient 20s ease infinite;
+    margin-left: 1%;
+    margin-top: 10px;
+    border-radius: 4px;
     width: 98%;
     display: inline-block;
 }
 #notifications {
     /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
-    background: white;
+    background: #ededed;
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-right: 1%;
     margin-top: 20px;
     padding: 0px;
-    border-radius: 10px;
+    padding-left: 1%;
+    padding-top: 5px;
+    border-radius: 4px;
     height: 200px;
-    width: 30%;
+    width: 27%;
     float: right;
     overflow-y: scroll;
 }
 
 .questionSort {
   /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
-  background: white;
+  background: #ededed;
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
     margin-top: 20px;
     margin-bottom: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     height: 30px;
     width: 67%;
 }
 .answerSort {
     /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
-    background: white;
+    background: #ededed;
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
     margin-top: 20px;
     margin-bottom: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     height: 30px;
     width: 67%;
 }
 .questionTitle {
     /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
-    background-color: white;
-    border-radius: 10px;
+    background-color: #ededed;
+    border-radius: 4px;
 }
 .questionText {
     /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
-    background-color: white;
-    border-radius: 10px;
+    background-color: #ededed;
+    border-radius: 4px;
 }
 
 #questions {
     /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
-    background: white;
+    background: #ededed;
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
     margin-right: 1%;
     margin-top: 0px;
     margin-bottom: 30px;
-    border-radius: 10px;
+    border-radius: 4px;
     max-height: 300px;
     min-height: 50px;
     margin-top: 7px;
-    border-radius: 10px;
+    border-radius: 4px;
     height: 400px;
     width: 67%;
     padding-top: 5px;
@@ -242,18 +264,18 @@ textarea {
 }
 #answers {
     /* background: linear-gradient(-45deg, #00aaff, #001eff, #00a6ff); */
-    background: white;
+    background: #ededed;
     background-size: 400% 400%;
     animation: gradient 5s ease infinite;
     margin-left: 1%;
     margin-right: 1%;
     margin-top: 0px;
     margin-bottom: 30px;
-    border-radius: 10px;
+    border-radius: 4px;
     max-height: 300px;
     min-height: 50px;
     margin-top: 7px;
-    border-radius: 10px;
+
     height: 400px;
     width: 67%;
     padding-top: 5px;
@@ -300,12 +322,12 @@ form {
     padding-left: 1%;
     padding-right: 1%;
     font-size: 17px;
-    border: 1px solid white;
+    border: 1px solid #ededed;
     float: left;
     width: 90%;
     height: 20px;
     border-radius: 5px;
-    background: #f1f1f1;
+    background: #ffffff;
 }
 
 /* form.example button{
@@ -324,9 +346,9 @@ form {
     padding-left: 1%;
     padding-right: 1%;
     background: #A69C61;
-    color: white;
+    color: #ededed;
     font-size: 17px;
-    border: 1px solid white;
+    border: 1px solid #ededed;
     border-left: none; /* Prevent double borders */
     cursor: pointer;
 }
@@ -339,7 +361,7 @@ form {
     padding-left: 1%;
     padding-right: 1%;
     background-color: #b4ae8c;
-    color: white;
+    color: #ededed;
     font-size: 17px;
     border: 1px solid #b4ae8c;
     border-left: none; /* Prevent double borders */
@@ -485,7 +507,7 @@ label{
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    border-radius: 10px;
+    border-radius: 4px;
 }
 #tagsUI {
     background-color: #fefefe;
@@ -493,7 +515,7 @@ label{
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    border-radius: 10px;
+    border-radius: 4px;
 }
 #signInUI {
     background-color: #fefefe;
@@ -501,7 +523,7 @@ label{
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    border-radius: 10px;
+    border-radius: 4px;
 }
 #signUpUI {
     background-color: #fefefe;
@@ -509,7 +531,7 @@ label{
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    border-radius: 10px;
+    border-radius: 4px;
 }
 
 .questionButton {
