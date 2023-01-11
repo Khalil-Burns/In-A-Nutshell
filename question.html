@@ -125,7 +125,7 @@
   <div class="questionDisplay">
     <table>
       <tr>
-        <td>
+        <td style="width:0%;">
           <% if (data.user) { %>
             <button class="like" id="likeQues-<%- data.question.id %>" onclick="preLikeQues('<%- data.question.id %>')"
               <% if(data.question.usersLiked[data.user.userID] == 1) { %>
@@ -188,11 +188,11 @@
             </p>
           <% } %>
         </td>
-        <td>
-          <div class="questionTitle">
+        <td style="width:100%;">
+          <div class="questionTitle" style="padding-left: 2%; padding-right: 2%;">
             <h1><%- data.question.question %></h1>
           </div>
-          <div class="questionText">
+          <div class="questionText" style="height:100px; padding-left: 2%; padding-right: 2%; padding-top: 1px; padding-bottom: 1px;">
             <p><%- data.question.text %></p>
           </div>
         </td>
