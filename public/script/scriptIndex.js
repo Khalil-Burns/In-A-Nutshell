@@ -2,6 +2,9 @@ function generateQuestions() {
   console.log(questionsArray);
   var questions = document.getElementById("questions");
   questions.innerHTML = "";
+  if (questionsArray.length == 0) {
+    questions.innerHTML = "No questions of the specified tag found.";
+  }
   for (var idx = 0; idx < questionsArray.length; idx++) {
 
     var question = document.createElement('div');
@@ -233,7 +236,7 @@ function showTagsPopup() {
   if (!question) {
 
       submitQuestionPopup.style.display = "block";
-      $("#questionPosted > p").text("You didn't type in a question!");
+      $("#questionPosted > p").text("You didn't type in a question title!");
       return;
   }
 

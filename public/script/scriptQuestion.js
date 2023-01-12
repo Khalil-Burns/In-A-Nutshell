@@ -1,6 +1,10 @@
 function generateAnswers() {
     var answers = document.getElementById("answers");
     answers.innerHTML = "";
+
+    if (answersArray.length == 0) {
+        answers.innerHTML = "No answers yet";
+      }
     for (var idx = 0; idx < answersArray.length; idx++) {
 
         var answer = document.createElement('div');
