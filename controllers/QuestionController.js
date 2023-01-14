@@ -1,3 +1,19 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: read and write for questions and answers
+ *  
+ *  Method Descriptions:
+ *
+ *      addQuestion(req, res, next): add a question to the questions collection
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *
+ *      getAllNotifications(id): get all of the notifications from a specific user's notification collection
+ *          id: id of the user
+ */
+
 const firebase = require('../db');
 const firestore = firebase.firestore();
 const FieldValue = require('firebase-admin').firestore.FieldValue;
