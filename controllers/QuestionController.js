@@ -44,6 +44,10 @@
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *
+ *      jsonConcat(o1, o2): concats two JSON objects
+ *          o1: first JSON object
+ *          o2: second JSON object
  */
 
 const firebase = require('../db');
@@ -397,6 +401,9 @@ const undislikeAns = async (req, res, next) => {
 }
 
 //helper function
+/*
+ *  Code from https://stackoverflow.com/questions/433627/concatenate-two-json-objects
+ */
 function jsonConcat(o1, o2) {
     for (var key in o2) {
         o1[key] = o2[key];
