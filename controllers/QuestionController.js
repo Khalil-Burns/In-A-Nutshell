@@ -10,8 +10,40 @@
  *          res: result (not used)
  *          next: next (not used)
  *
- *      getAllNotifications(id): get all of the notifications from a specific user's notification collection
- *          id: id of the user
+ *      addAnswer(req, res, next): add an answer to the answers collection of a specific question document
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *
+ *      getAllQuestions(req, res, next): get all of the question documents in the questions collection
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *
+ *      getAllQuestionsByTagAny(req, res, next): get all of the question documents with a specific tag in the questions collection
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *
+ *      getAllAnswers(req, res, next): get all of the answer documents in the answers collection of a specific question document
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *
+ *      getQuestion(req, res, next): get a specific question in the questions collection
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *
+ *      like, unlike, dislike, undislike(req, res, next): like/unlike/dislike/undislike a specific question
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *
+ *      likeAns, unlikeAns, dislikeAns, undislikeAns(req, res, next): like/unlike/dislike/undislike a specific answer
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
  */
 
 const firebase = require('../db');
