@@ -1,3 +1,9 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: set up firebase database
+ */
+
 var { firebaseConfig } = require("./config");
 var admin = require("firebase-admin");
 const { initializeApp } = require('firebase/app');
