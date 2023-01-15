@@ -48,6 +48,7 @@
  *      jsonConcat(o1, o2): concats two JSON objects
  *          o1: first JSON object
  *          o2: second JSON object
+ *      return: JSON object
  */
 
 const firebase = require('../db');
