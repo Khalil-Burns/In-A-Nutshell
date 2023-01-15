@@ -9,9 +9,11 @@
  *          id: id of the user
  *          text: display text for the notification
  *          img: img source for icon display
+ *      return: null
  *
  *      getAllNotifications(id): get all of the notifications from a specific user's notification collection
  *          id: id of the user
+ *      return: array
  */
 
 const firebase = require('../db');
