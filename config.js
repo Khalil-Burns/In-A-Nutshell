@@ -1,3 +1,9 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: server and firebase database config variables
+ */
+
 'use strict';
 
 const dotenv = require('dotenv') //used to get the stuff from .env
@@ -20,7 +26,7 @@ const {
 assert(PORT, 'PORT is required');
 assert(HOST, 'HOST is required');
 
-module.exports = {     // you can pretty much copy this whole thing
+module.exports = {
     port: PORT,
     host: HOST,
     url: HOST_URL,
