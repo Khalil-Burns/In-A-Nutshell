@@ -9,41 +9,49 @@
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: null
  *
  *      addAnswer(req, res, next): add an answer to the answers collection of a specific question document
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: null
  *
  *      getAllQuestions(req, res, next): get all of the question documents in the questions collection
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: array
  *
  *      getAllQuestionsByTagAny(req, res, next): get all of the question documents with a specific tag in the questions collection
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: array
  *
  *      getAllAnswers(req, res, next): get all of the answer documents in the answers collection of a specific question document
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: array
  *
  *      getQuestion(req, res, next): get a specific question in the questions collection
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: array -> [status, JSON object]
  *
  *      like, unlike, dislike, undislike(req, res, next): like/unlike/dislike/undislike a specific question
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: null
  *
  *      likeAns, unlikeAns, dislikeAns, undislikeAns(req, res, next): like/unlike/dislike/undislike a specific answer
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: null
  *
  *      jsonConcat(o1, o2): concats two JSON objects
  *          o1: first JSON object
