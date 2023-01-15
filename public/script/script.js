@@ -5,7 +5,7 @@
  *  
  *  Method Descriptions:
  *
- *      generateNotifications(): dynamically generate all HTML in "notifications" to display the notifications
+ *      generateNotifications(): dynamically generate all HTML in "notifications" div to display the notifications
  *      return: null
  *      
  *      generateTags(): dynamically generate all HTML in search bar to display the tags
