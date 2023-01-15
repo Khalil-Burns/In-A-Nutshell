@@ -1,7 +1,7 @@
 /*
  *  Authors: Khalil Burns and Matthew Lim
  *  
- *  File Description: read and write for questions and answers
+ *  File Description: controls the sign in state of a user
  *  
  *  Method Descriptions:
  *
