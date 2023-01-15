@@ -9,11 +9,13 @@
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: array
  *
  *      addTags(id, text, img): add tag to the list of current tags (in the tags array in the tags collection)
  *          req: request (all the request data)
  *          res: result (not used)
  *          next: next (not used)
+ *      return: null
  */
  
 const firebase = require('../db');
