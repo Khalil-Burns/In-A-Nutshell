@@ -1,7 +1,7 @@
 /*
  *  Authors: Khalil Burns and Matthew Lim
  *  
- *  File Description: read and write for notifications
+ *  File Description: read and write for tags
  *  
  *  Method Descriptions:
  *
