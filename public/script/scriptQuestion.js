@@ -1,7 +1,7 @@
 /*
  *  Authors: Khalil Burns and Matthew Lim
  *  
- *  File Description: frontend, all functions that are used in index.html
+ *  File Description: frontend, all functions that are used in question.html
  *  
  *  Method Descriptions:
  *
