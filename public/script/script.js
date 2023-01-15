@@ -39,13 +39,26 @@
  *      logout(): logout, post to /logout
  *      return: null
  *
- *      sort(): called before quicksort to make sure the array has proper format
+ *      sort(array, sortBy, isAsc): called before quicksort to make sure the array has proper format
+ *          array: the array being sorted
+ *          sortBy: which field is being sorted
+ *          isAsc: sort by ascending?
  *      return: array
  *
- *      quicksort(): sorts array using the quicksort algorithm
+ *      quicksort(array, left, right, sortBy, isAsc): sorts array using the quicksort algorithm
+ *          array: the array being sorted
+ *          left: leftmost index
+ *          right: rightmost index
+ *          sortBy: which field is being sorted
+ *          isAsc: sort by ascending?
  *      return: null
  *
- *      partition(): helper function for quicksort(), partitions the array
+ *      partition(array, left, right, sortBy, isAsc): helper function for quicksort(), partitions the array
+ *          array: the array being sorted
+ *          left: leftmost index
+ *          right: rightmost index
+ *          sortBy: which field is being sorted
+ *          isAsc: sort by ascending?
  *      return: integer
  */
 
