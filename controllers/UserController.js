@@ -23,6 +23,12 @@
  *          next: next (not used)
  *      return: JSON object
  *
+ *      logOut(req, res, next): log out current user
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: JSON object
+ *
  *      jsonConcat(o1, o2): concats two JSON objects
  *          o1: first JSON object
  *          o2: second JSON object
