@@ -1,7 +1,7 @@
 /*
  *  Authors: Khalil Burns and Matthew Lim
  *  
- *  File Description: Answer class (see constructor)
+ *  File Description: Answer class (see constructor for details)
  *
  */
 
