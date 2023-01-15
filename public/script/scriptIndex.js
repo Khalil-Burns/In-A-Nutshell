@@ -5,7 +5,7 @@
  *  
  *  Method Descriptions:
  *
- *      generateQuestions(): dynamically generate all HTML in "questions" div to display the notifications
+ *      generateQuestions(): dynamically generate all HTML in "questions" div to display all questions
  *      return: null
  *
  *      dropdownOnClick(): show the dropdown when click on user in top left
