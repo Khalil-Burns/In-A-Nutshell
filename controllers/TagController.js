@@ -1,3 +1,21 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: read and write for notifications
+ *  
+ *  Method Descriptions:
+ *
+ *      getTags(id, text, img): get all of the current tags (from the tags array in the tags collection)
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *
+ *      addTags(id, text, img): add tag to the list of current tags (in the tags array in the tags collection)
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ */
+ 
 const firebase = require('../db');
 const firestore = firebase.firestore();
 const FieldValue = require('firebase-admin').firestore.FieldValue;
