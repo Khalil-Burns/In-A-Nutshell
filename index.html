@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-<!--sup-->
+<!--.replaceAll('\"', '').replaceAll("\'", "").replaceAll('\n','')-->
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -18,7 +19,6 @@
     <script>
       
       var questionsArray = [];
-      console.log(questionsArray);
       var tags = [];
       var isUser = false;
       
@@ -30,7 +30,7 @@
             'id': '<%- data.questions[idx].id %>',
             'likes': '<%- data.questions[idx].likes %>',
             'dislikes': '<%- data.questions[idx].dislikes %>',
-            'question': '<%- data.questions[idx].question %>',
+            'question': '<%- data.questions[idx].question.replaceAll("\"", "").replaceAll("\'", "").replaceAll("\n","") %>',
             'timeCreated': '<%- data.questions[idx].timeCreated %>',
             'user': {
               'userID': '<%- data.questions[idx].user.userID %>',
@@ -54,7 +54,7 @@
         var userEmail = '<%- data.user.userEmail %>';
         var displayName = '<%- data.user.displayName %>';
 
-        var notificationsArray = [];
+        var notificationsArray = [{text: "No new notifications :("}];
         '<% if (data.user.notifications) { %>'
 
           '<% for (var idx = 0; idx < data.user.notifications.length; idx++) { %>'

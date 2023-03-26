@@ -145,7 +145,7 @@ const getAllAnswers = async (data) => {
                 doc.data().dislikes,
                 doc.data().wordCnt,
                 doc.data().title,
-                doc.data().answer.replaceAll('\n',''),
+                doc.data().answer,
                 doc.data().usersLiked,
                 doc.data().timeCreated
             );

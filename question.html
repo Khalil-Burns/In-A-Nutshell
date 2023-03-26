@@ -20,7 +20,7 @@
 
     var answersArray = [];
     var isUser = false;
-    var questionTitle = "<%- data.question.question %>";
+    var questionTitle = '<%- data.question.question.replaceAll("\"", "").replaceAll("\'", "").replaceAll("\n","") %>';
 
     '<% for (var idx = 0; idx < data.question.answers.length; idx++) { %>'
       
@@ -28,8 +28,8 @@
         'id': '<%- data.question.answers[idx].id %>',
         'likes': '<%- data.question.answers[idx].likes %>',
         'dislikes': '<%- data.question.answers[idx].dislikes %>',
-        'title': '<%- data.question.answers[idx].title %>',
-        'answer': '<%- data.question.answers[idx].answer %>',
+        'title': '<%- data.question.answers[idx].title.replaceAll("\"", "").replaceAll("\'", "").replaceAll("\n","") %>',
+        'answer': '<%- data.question.answers[idx].answer.replaceAll("\"", "").replaceAll("\'", "").replaceAll("\n","") %>',
         'timeCreated': '<%- data.question.answers[idx].timeCreated %>',
         'user': {
           'userID': '<%- data.question.answers[idx].user.userID %>',
@@ -52,7 +52,7 @@
         'userID': '<%- data.question.user.userID %>'
       }
 
-      var notificationsArray = [];
+      var notificationsArray = [{text: "No new notifications :("}];
       '<% if (data.user.notifications) { %>'
       
         '<% for (var idx = 0; idx < data.user.notifications.length; idx++) { %>'
@@ -330,7 +330,7 @@
       </script>
       <% if (data.user) { %>
         <textarea id="title" placeholder="Answer title" rows="1"></textarea>
-        <input id="postAnswer" type="button" value="Ask!" onclick="post()"/>
+        <input id="postAnswer" type="button" value="Post answer" onclick="post()"/>
       <% } %>
     </div>
   </div>

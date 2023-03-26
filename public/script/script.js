@@ -1,12 +1,34 @@
 function generateNotifications() {
     var notifications = document.getElementById("notifications");
-    notifications.innerHTML = "<h2>Notifications:</h2>";
+    notifications.innerHTML = '<h2 style="float: left; position: sticky; top: 0; background-color: inherit">Notifications:</h2>';
+
+    var button = document.createElement("button");
+    button.style.float = "right";
+    button.style.position = "sticky";
+    button.style.height = "1.5em";
+    button.style.padding = "0.5px";
+    button.style.top = "0";
+    button.style.backgroundColor = 'white';
+    button.innerHTML = "Clear";
+    button.onclick = function() {
+        notificationsArray = [{text: "No new notifications :("}];
+        generateNotifications();
+        $.post('/clearNotifications', {
+            id: userID
+        })
+    };
+    notifications.appendChild(button);
+    
     for (var idx = 0; idx < notificationsArray.length; idx++) {
         var notification = document.createElement('div')
         notification.setAttribute('class', 'notification');
         notifications.appendChild(notification);
 
         var hr = document.createElement('hr');
+        if (idx == 0) {
+            hr.style.color = "rgba(0, 0, 0, 100)";
+            hr.style.border = "0";
+        }
         notification.appendChild(hr);
 
         var table = document.createElement('table');

@@ -31,8 +31,12 @@ const {
     getTags, 
     addTag
 } = require('./controllers/TagController');
+const { 
+    clearNotifications,
+} = require('./controllers/NotificationController');
 
 const { render } = require('ejs');
+const { clear } = require('console');
 
 const app = express();
 
@@ -122,6 +126,10 @@ app.post('/logout', async(req, res, next) => {
     res.send( { error: data.error } );
 });
 
+app.post('/clearNotifications', async(req, res, next) => {
+    await clearNotifications(req, res, next);
+})
+
 app.post('/ask', async(req, res, next) => {
     addQuestion(req, res, next);
     res.send('success');
@@ -130,5 +138,9 @@ app.post('/answer', async(req, res, next) => {
     addAnswer(req, res, next);
     res.send('success')
 });
+
+app.use((req, res, next) => {
+    res.status(404).send("<h1>Page not found!</h1><br><p>Make sure you typed in the correct URL, otherwise, <strong>this page might be in development</strong></p>");
+})
 
 app.listen(config.port, () => console.log('App is listening on url http://localhost:' + config.port));
