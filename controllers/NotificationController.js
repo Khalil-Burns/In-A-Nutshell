@@ -65,7 +65,22 @@ const getAllNotifications = async (id) => {
     }
 }
 
+const clearNotifications = async (req, res, next) => {
+    try {
+        console.log(req.body);
+        await firestore.collection('users').doc(req.body.id).collection('notifications').listDocuments().then(val => {
+            val.map((val) => {
+                val.delete()
+            })
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     createNotification,
-    getAllNotifications
+    getAllNotifications,
+    clearNotifications
 }
