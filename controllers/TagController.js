@@ -1,3 +1,23 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: read and write for tags
+ *  
+ *  Method Descriptions:
+ *
+ *      getTags(req, res, next): get all of the current tags (from the tags array in the tags collection)
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: array
+ *
+ *      addTags(req, res, next): add tag to the list of current tags (in the tags array in the tags collection)
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: null
+ */
+ 
 const firebase = require('../db');
 const firestore = firebase.firestore();
 const FieldValue = require('firebase-admin').firestore.FieldValue;

@@ -1,3 +1,37 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: frontend, all functions that are used in question.html
+ *  
+ *  Method Descriptions:
+ *
+ *      generateAnswers(): dynamically generate all HTML in "answers" div to display the answers for a specific question
+ *      return: null
+ *
+ *      dropdownOnClick(): show the dropdown when click on user in top left
+ *      return: null
+ *
+ *      post(): post answer to /answer
+ *      return: null
+ *
+ *      preLikeAns(id): for answer, function to determine whether to switch to like (user has clicked dislike already), unlike (user has clicker liked already), or just like (user has not clicked anything)
+ *        id: id of the question
+ *      return: null
+ *
+ *      preDislikeAns(id): for answer, function to determine whether to switch to dislike (user has clicked like already), undislike (user has clicker disliked already), or just dislike (user has not clicked anything)
+ *        id: id of the question
+ *      return: null
+ *
+ *      likeAns/dislikeAns/likeQues/dislikeQues(id, amount): like/dislike a question(Ques)/answer(Ans)
+ *          id: id of the question
+ *          amount: amount to decrease dislike/like(the other one) by
+ *      return: null
+ *
+ *      unlikeAns/undislikeAns/unlikeQues/undislikeQues(id): unlike/undislike a question(Ques)/answer(Ans)
+ *          id: id of the question
+ *      return: null
+ */
+
 function generateAnswers() {
     var answers = document.getElementById("answers");
     answers.innerHTML = "";

@@ -1,3 +1,10 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: Notification class (see constructor for details)
+ *
+ */
+
 class Notification {
     constructor(id, img, text, timeCreated) {
         this.id = id;

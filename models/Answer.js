@@ -1,3 +1,10 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: Answer class (see constructor for details)
+ *
+ */
+
 class Answer {
     constructor(id, user, likes, dislikes, wordCnt, title, answer, usersLiked, timeCreated) {
         this.id = id;

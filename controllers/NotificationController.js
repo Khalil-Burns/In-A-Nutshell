@@ -1,3 +1,21 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: read and write for notifications
+ *  
+ *  Method Descriptions:
+ *
+ *      createNotification(id, text, img): add a notification to the user's notification collection
+ *          id: id of the user
+ *          text: display text for the notification
+ *          img: img source for icon display
+ *      return: null
+ *
+ *      getAllNotifications(id): get all of the notifications from a specific user's notification collection
+ *          id: id of the user
+ *      return: array
+ */
+
 const firebase = require('../db');
 const firestore = firebase.firestore();
 

@@ -1,3 +1,10 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: Question class (see constructor for details)
+ *
+ */
+
 class Question {
     constructor(id, user, likes, dislikes, wordCnt, question, tags, text, usersLiked, answers, timeCreated) {
         this.id = id;

@@ -1,3 +1,40 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: controls the sign in state of a user
+ *  
+ *  Method Descriptions:
+ *
+ *      curUser(req, res, next): get the current user (if there is one)
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: JSON object
+ *
+ *      register(req, res, next): register new user (if it doesn't already exist), then sign in
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: JSON object
+ *
+ *      signIn(req, res, next): sign in user (if it exists), then sign in
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: JSON object
+ *
+ *      logOut(req, res, next): log out current user
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: JSON object
+ *
+ *      jsonConcat(o1, o2): concats two JSON objects
+ *          o1: first JSON object
+ *          o2: second JSON object
+ *      return: JSON object
+ */
+
 const firebase = require('../db');
 const Question = require('../models/Question');
 const firestore = firebase.firestore();

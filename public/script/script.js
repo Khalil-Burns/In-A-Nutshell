@@ -1,3 +1,67 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: frontend, all functions that are used in all HTML files
+ *  
+ *  Method Descriptions:
+ *
+ *      generateNotifications(): dynamically generate all HTML in "notifications" div to display the notifications
+ *      return: null
+ *      
+ *      generateTags(): dynamically generate all HTML in search bar to display the tags
+ *      return: null
+ *
+ *      showTags(filt): show the tags list (when the search bar has focus)
+ *          filt: whether the list has already been filtered, to prevent an infinite recursive loop
+ *      return: null
+ *
+ *      hideTags(): hide the tags list (when the search bar loses focus)
+ *      return: null
+ *
+ *      filter(): show all the tags based on what the user has typed in the search bar
+ *      return: null
+ *
+ *      search(): search for the filters (redirects the user to /?filter="their filter")
+ *      return: null
+ *
+ *      loginPopup(): show the login popup
+ *      return: null
+ *
+ *      signupPopup(): show the signup popup
+ *      return: null
+ *
+ *      login(): login, post to /login
+ *      return: null
+ *
+ *      signup(): signup, post to /signup
+ *      return: null
+ *
+ *      logout(): logout, post to /logout
+ *      return: null
+ *
+ *      sort(array, sortBy, isAsc): called before quicksort to make sure the array has proper format
+ *          array: the array being sorted
+ *          sortBy: which field is being sorted
+ *          isAsc: sort by ascending?
+ *      return: array
+ *
+ *      quicksort(array, left, right, sortBy, isAsc): sorts array using the quicksort algorithm
+ *          array: the array being sorted
+ *          left: leftmost index
+ *          right: rightmost index
+ *          sortBy: which field is being sorted
+ *          isAsc: sort by ascending?
+ *      return: null
+ *
+ *      partition(array, left, right, sortBy, isAsc): helper function for quicksort(), partitions the array
+ *          array: the array being sorted
+ *          left: leftmost index
+ *          right: rightmost index
+ *          sortBy: which field is being sorted
+ *          isAsc: sort by ascending?
+ *      return: integer
+ */
+
 function generateNotifications() {
     var notifications = document.getElementById("notifications");
     notifications.innerHTML = '<h2 style="float: left; position: sticky; top: 0; background-color: inherit">Notifications:</h2>';
@@ -225,6 +289,9 @@ function sort(array, sortBy, isAsc) {
     quicksort(array, 0, array.length - 1, sortBy, isAsc);
     return(array);
 }
+/*
+ *  concept from: https://en.wikipedia.org/wiki/Quicksort
+ */
 function quicksort(array, left, right, sortBy, isAsc) {
     var mid = partition(array, left, right, sortBy, isAsc);
     if (left < mid - 1) {

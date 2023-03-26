@@ -1,3 +1,62 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: frontend, all functions that are used in index.html
+ *  
+ *  Method Descriptions:
+ *
+ *      generateQuestions(): dynamically generate all HTML in "questions" div to display all questions
+ *      return: null
+ *
+ *      dropdownOnClick(): show the dropdown when click on user in top left
+ *      return: null
+ *      
+ *      generateAddTags(): dynamically generate all HTML in "add tags" popup after post question to display the tags
+ *      return: null
+ *      
+ *      generateAddTagsDisplay(): dynamically generate all HTML in "add tags" popup after post question to display the current tags added to the questions
+ *      return: null
+ *
+ *      showAddTagsDisplay(filt): show the tags list (when the "add tags" bar has focus)
+ *          filt: whether the list has already been filtered, to prevent an infinite recursive loop
+ *      return: null
+ *
+ *      hideAddTagsDisplay(): hide the tags list (when the "add tags" bar loses focus)
+ *      return: null
+ *
+ *      filterAddTagsDisplay(): show all the tags based on what the user has typed in the "add tags" bar
+ *      return: null
+ *
+ *      addTag(): add tag to the array of currently added tags for a question
+ *      return: null
+ *
+ *      removeTag(): remove tag from the array of currently added tags for a question
+ *      return: null
+ *
+ *      showTagsPopup(): show the tags popup before question has been posted
+ *      return: null
+ *
+ *      post(): post question to /ask
+ *      return: null
+ *
+ *      preLike(id): function to determine whether to switch to like (user has clicked dislike already), unlike (user has clicker liked already), or just like (user has not clicked anything)
+ *        id: id of the question
+ *      return: null
+ *
+ *      preDislike(id): function to determine whether to switch to dislike (user has clicked like already), undislike (user has clicker disliked already), or just dislike (user has not clicked anything)
+ *        id: id of the question
+ *      return: null
+ *
+ *      like/dislike(id, amount): like/dislike a question
+ *          id: id of the question
+ *          amount: amount to decrease dislike/like(the other one) by
+ *      return: null
+ *
+ *      unlike/undislike(id): unlike/undislike a question
+ *          id: id of the question
+ *      return: null
+ */
+
 function generateQuestions() {
   console.log(questionsArray);
   var questions = document.getElementById("questions");

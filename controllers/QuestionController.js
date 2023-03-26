@@ -1,3 +1,64 @@
+/*
+ *  Authors: Khalil Burns and Matthew Lim
+ *  
+ *  File Description: read and write for questions and answers
+ *  
+ *  Method Descriptions:
+ *
+ *      addQuestion(req, res, next): add a question to the questions collection
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: null
+ *
+ *      addAnswer(req, res, next): add an answer to the answers collection of a specific question document
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: null
+ *
+ *      getAllQuestions(req, res, next): get all of the question documents in the questions collection
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: array
+ *
+ *      getAllQuestionsByTagAny(req, res, next): get all of the question documents with a specific tag in the questions collection
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: array
+ *
+ *      getAllAnswers(req, res, next): get all of the answer documents in the answers collection of a specific question document
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: array
+ *
+ *      getQuestion(req, res, next): get a specific question in the questions collection
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: array -> [status, JSON object]
+ *
+ *      like, unlike, dislike, undislike(req, res, next): like/unlike/dislike/undislike a specific question
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: null
+ *
+ *      likeAns, unlikeAns, dislikeAns, undislikeAns(req, res, next): like/unlike/dislike/undislike a specific answer
+ *          req: request (all the request data)
+ *          res: result (not used)
+ *          next: next (not used)
+ *      return: null
+ *
+ *      jsonConcat(o1, o2): concats two JSON objects
+ *          o1: first JSON object
+ *          o2: second JSON object
+ *      return: JSON object
+ */
+
 const firebase = require('../db');
 const firestore = firebase.firestore();
 const FieldValue = require('firebase-admin').firestore.FieldValue;
@@ -349,6 +410,9 @@ const undislikeAns = async (req, res, next) => {
 }
 
 //helper function
+/*
+ *  Code from https://stackoverflow.com/questions/433627/concatenate-two-json-objects
+ */
 function jsonConcat(o1, o2) {
     for (var key in o2) {
         o1[key] = o2[key];
