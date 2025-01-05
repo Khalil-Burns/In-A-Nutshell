@@ -5,10 +5,7 @@
 1. [Introduction](#introduction)  
 2. [Features](#features)  
 3. [Tech Stack](#tech-stack)  
-4. [Setup Instructions](#setup-instructions)  
-5. [Usage](#usage)  
-6. [Contributing](#contributing)  
-7. [License](#license)  
+4. [Setup Instructions](#setup-instructions)
 
 ---
 
