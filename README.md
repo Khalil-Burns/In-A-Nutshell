@@ -1,5 +1,4 @@
 # In A Nutshell: A Q&A Website  
-**GitHub URL:** [Insert GitHub URL here]  
 
 ## Table of Contents  
 1. [Introduction](#introduction)  
